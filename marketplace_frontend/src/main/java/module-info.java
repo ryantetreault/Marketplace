@@ -3,6 +3,7 @@ module com.cboard.marketplace.marketplace_frontend {
 
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.cboard.marketplace.marketplace_frontend to javafx.fxml;
