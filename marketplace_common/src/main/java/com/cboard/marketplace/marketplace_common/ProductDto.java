@@ -1,23 +1,14 @@
-package com.cboard.marketplace.marketplace_backend.model;
+package com.cboard.marketplace.marketplace_common;
 
-import jakarta.persistence.Entity;
-import com.cboard.marketplace.marketplace_common.*;
-
-import jakarta.persistence.*;
-
-
-@Entity
-@Table(name = "product")
-//@DiscriminatorValue("product")
-public class Product extends Item
+public class ProductDto extends ItemDto
 {
     private int quantity;
     private String brand;
 
-    public Product() {
+    public ProductDto() {
     }
 
-    public Product(int itemId, String name, String description, double price, Category category, String releaseDate, boolean available, Location location, String itemType, String image_name, String image_type, byte[] image_date, int quantity, String brand)
+    public ProductDto(int itemId, String name, String description, double price, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date, int quantity, String brand)
     {
         super(itemId, name, description, price, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
         this.quantity = quantity;

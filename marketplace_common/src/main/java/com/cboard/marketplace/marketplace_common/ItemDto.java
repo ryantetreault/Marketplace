@@ -1,42 +1,39 @@
-package com.cboard.marketplace.marketplace_backend.model;
+package com.cboard.marketplace.marketplace_common;
 
-import com.cboard.marketplace.marketplace_common.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import jakarta.persistence.*;
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "itemType",
+        visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ProductDto.class, name = "product"),
+        @JsonSubTypes.Type(value = ServiceDto.class, name = "service"),
+        @JsonSubTypes.Type(value = RequestDto.class, name = "service")
+})
 
 
-//entity maps this saying this is a table
-
-@Entity
-@Table(name = "item")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Item
+public abstract class ItemDto
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int itemId;
     private String name;
-    String description;
+    private String description;
     private double price;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    private String category;
     private String releaseDate;
     private boolean available;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "location_id")
-    private Location location;
+    private String location;
     private String itemType;
     private String image_name;
     private String image_type;
     private byte[] image_date;
 
-
-    public Item() {
+    public ItemDto() {
     }
 
-    public Item(int itemId, String name, String description, double price, Category category, String releaseDate, boolean available, Location location, String itemType, String image_name, String image_type, byte[] image_date) {
+    public ItemDto(int itemId, String name, String description, double price, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date) {
         this.itemId = itemId;
         this.name = name;
         this.description = description;
@@ -83,11 +80,11 @@ public abstract class Item
         this.price = price;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -107,11 +104,11 @@ public abstract class Item
         this.available = available;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -146,5 +143,4 @@ public abstract class Item
     public void setImage_date(byte[] image_date) {
         this.image_date = image_date;
     }
-
 }
