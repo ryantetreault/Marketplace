@@ -1,16 +1,19 @@
 package com.cboard.marketplace.marketplace_common;
 
+import jakarta.validation.constraints.NotNull;
+
 public class ProductDto extends ItemDto
 {
-    private int quantity;
+    @NotNull(message = "Quantity is required...")
+    private Integer quantity;
     private String brand;
 
     public ProductDto() {
     }
 
-    public ProductDto(int itemId, String name, String description, double price, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date, int quantity, String brand)
+    public ProductDto(int itemId, String name, String description, Double price, int userId, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date, Integer quantity, String brand)
     {
-        super(itemId, name, description, price, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
+        super(itemId, name, description, price, userId, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
         this.quantity = quantity;
         this.brand = brand;
     }

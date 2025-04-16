@@ -1,7 +1,9 @@
 package com.cboard.marketplace.marketplace_common;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import jakarta.validation.constraints.*;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -11,16 +13,19 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ProductDto.class, name = "product"),
         @JsonSubTypes.Type(value = ServiceDto.class, name = "service"),
-        @JsonSubTypes.Type(value = RequestDto.class, name = "service")
+        @JsonSubTypes.Type(value = RequestDto.class, name = "request")
 })
 
 
 public abstract class ItemDto
 {
     private int itemId;
+    @NotNull(message = "Name is required...")
     private String name;
     private String description;
-    private double price;
+    @NotNull(message = "Price is required...")
+    private Double price;
+    private int userId;
     private String category;
     private String releaseDate;
     private boolean available;
@@ -33,11 +38,12 @@ public abstract class ItemDto
     public ItemDto() {
     }
 
-    public ItemDto(int itemId, String name, String description, double price, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date) {
+    public ItemDto(int itemId, String name, String description, Double price, int userId, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date) {
         this.itemId = itemId;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.userId = userId;
         this.category = category;
         this.releaseDate = releaseDate;
         this.available = available;
@@ -46,6 +52,14 @@ public abstract class ItemDto
         this.image_name = image_name;
         this.image_type = image_type;
         this.image_date = image_date;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getDescription() {
@@ -76,7 +90,7 @@ public abstract class ItemDto
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -112,6 +126,7 @@ public abstract class ItemDto
         this.location = location;
     }
 
+    @JsonTypeId //prevents duplication when fetching from database ?
     public String getItemType() {
         return itemType;
     }
