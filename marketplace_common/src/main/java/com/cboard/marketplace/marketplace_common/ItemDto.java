@@ -25,6 +25,7 @@ public abstract class ItemDto
     private String description;
     @NotNull(message = "Price is required...")
     private Double price;
+    private int userId;
     private String category;
     private String releaseDate;
     private boolean available;
@@ -37,11 +38,12 @@ public abstract class ItemDto
     public ItemDto() {
     }
 
-    public ItemDto(int itemId, String name, String description, Double price, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date) {
+    public ItemDto(int itemId, String name, String description, Double price, int userId, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date) {
         this.itemId = itemId;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.userId = userId;
         this.category = category;
         this.releaseDate = releaseDate;
         this.available = available;
@@ -50,6 +52,14 @@ public abstract class ItemDto
         this.image_name = image_name;
         this.image_type = image_type;
         this.image_date = image_date;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getDescription() {

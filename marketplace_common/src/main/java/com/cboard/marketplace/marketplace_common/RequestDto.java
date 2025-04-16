@@ -12,9 +12,9 @@ public class RequestDto extends ItemDto
 
 
 
-    public RequestDto(int itemId, String name, String description, Double price, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date, String deadline)
+    public RequestDto(int itemId, String name, String description, Double price, int userId, String category, String releaseDate, boolean available, String location, String itemType, String image_name, String image_type, byte[] image_date, String deadline)
     {
-        super(itemId, name, description, price, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
+        super(itemId, name, description, price, userId, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
         this.deadline = deadline;
     }
 
