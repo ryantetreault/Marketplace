@@ -11,12 +11,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class LoginController implements Initializable {
     @FXML
     private Label welcomeText;
     @FXML
@@ -25,27 +24,27 @@ public class HelloController implements Initializable {
     private Pane pane;
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        TranslateTransition t = new TranslateTransition(Duration.seconds(1), vbox);
-        t.setToX(0);
-        t.play();
-        t.setOnFinished((e) -> {
+
+
+
             try {
-                Parent fxml = FXMLLoader.load(getClass().getResource("signIn.fxml"));
-                vbox.getChildren().removeAll();
+                Parent fxml = FXMLLoader.load(getClass().getResource("signUp.fxml"));
+
                 vbox.getChildren().setAll(fxml);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        });
+
     }
 
     @FXML
     public void openSignUp(javafx.event.ActionEvent event) {
         TranslateTransition t = new TranslateTransition(Duration.seconds(1), vbox);
         t.setToX(0);
-        t.play();
+
         t.setOnFinished((e) -> {
             try {
                 Parent fxml = FXMLLoader.load(getClass().getResource("signUp.fxml"));
@@ -55,13 +54,14 @@ public class HelloController implements Initializable {
                 throw new RuntimeException(ex);
             }
         });
+        t.play();
 
     }
     @FXML
     public void openSignIn(javafx.event.ActionEvent event) {
         TranslateTransition t = new TranslateTransition(Duration.seconds(1), vbox);
         t.setToX(pane.getWidth() - vbox.getWidth() - 50);
-        t.play();
+
         t.setOnFinished((e) -> {
             try {
                 Parent fxml = FXMLLoader.load(getClass().getResource("signIn.fxml"));
@@ -71,6 +71,7 @@ public class HelloController implements Initializable {
                 throw new RuntimeException(ex);
             }
         });
+        t.play();
 
     }
 
