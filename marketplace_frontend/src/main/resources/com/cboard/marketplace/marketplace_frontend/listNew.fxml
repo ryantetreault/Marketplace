@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="360.0" style="-fx-background-color: light gray;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.ListNewController">
+   <children>
+      <HBox prefHeight="191.0" prefWidth="360.0" style="-fx-background-color: transparent;">
+         <children>
+            <StackPane prefHeight="223.0" prefWidth="164.0" style="-fx-background-color: transparent;">
+               <children>
+                  <ImageView fitHeight="146.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/testPic.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <VBox prefHeight="224.0" prefWidth="201.0" spacing="10.0" style="-fx-background-color: transparent;">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+               <children>
+                  <TextField promptText="Listing Name" />
+                  <TextField promptText="Price" />
+                  <TextField promptText="Location" />
+                  <ComboBox prefHeight="25.0" prefWidth="203.0" promptText="Service Type" />
+                  <TextField promptText="Brand" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+      <TextArea editable="false" prefHeight="253.0" prefWidth="360.0" promptText="Enter Description" style="-fx-background-color: white;">
+         <padding>
+            <Insets left="10.0" />
+         </padding></TextArea>
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="360.0" styleClass="blue-panel" stylesheets="@styles.css">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="88.0" styleClass="blue-btn" text="List">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="productCancelBtn" mnemonicParsing="false" onAction="#closeListNew" prefHeight="29.0" prefWidth="88.0" styleClass="blue-btn" text="Cancel">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>

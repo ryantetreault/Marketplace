@@ -1,4 +1,4 @@
-package com.cboard.marketplace.marketplace_backend.dto;
+package com.cboard.marketplace.marketplace_common.dto;
 
 public class AuthResponse {
     private String token;
