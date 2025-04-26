@@ -30,3 +30,7 @@
      -fx-background-radius: 5px;
      -fx-text-fill: #ffffff;
  }
+.text-field, .password-field {
+    -fx-text-fill: #ffffff; /* white text inside */
+    -fx-prompt-text-fill: #aaaaaa; /* light gray placeholder */
+}
