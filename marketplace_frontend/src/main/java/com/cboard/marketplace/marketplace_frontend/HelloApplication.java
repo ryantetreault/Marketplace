@@ -9,13 +9,16 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-
+// import org.kordamp.ikonli.fontawesome5.FontAwesomeSolidIkonHandler;
 
 public class HelloApplication extends Application
 {
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Force Ikonli to load FontAwesome Solid icons
+        // new FontAwesomeSolidIkonHandler().resolve("fas-user");
+
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.setFill(Color.TRANSPARENT);
