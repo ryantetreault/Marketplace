@@ -7,16 +7,18 @@ public class UserDto
     private String lastName;
     private String email;
     private String username;
+    private Double averageRating;
 
     public UserDto() {
     }
 
-    public UserDto(int userId, String firstName, String lastName, String email, String username) {
+    public UserDto(int userId, String firstName, String lastName, String email, String username, Double averageRating) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
+        this.averageRating = averageRating;
     }
 
     public int getUserId() {
@@ -57,5 +59,13 @@ public class UserDto
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
     }
 }
