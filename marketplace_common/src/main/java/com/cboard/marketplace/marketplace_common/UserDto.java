@@ -1,31 +1,23 @@
-package com.cboard.marketplace.marketplace_backend.model;
+package com.cboard.marketplace.marketplace_common;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "user")
-public class User
+public class UserDto
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String firstName;
     private String lastName;
     private String email;
     private String username;
-    private String password;
     private Double averageRating;
 
-    public User() {
+    public UserDto() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, Double averageRating) {
+    public UserDto(int userId, String firstName, String lastName, String email, String username, Double averageRating) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
-        this.password = password;
         this.averageRating = averageRating;
     }
 
@@ -67,14 +59,6 @@ public class User
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Double getAverageRating() {
