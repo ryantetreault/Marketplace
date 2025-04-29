@@ -141,17 +141,22 @@ public class LoginController implements Initializable {
                 AuthResponse authResponse = HttpUtility.HTTP_UTILITY.getGson().fromJson(responseBody, AuthResponse.class);
                 SessionManager.setToken(authResponse.getToken());
 
+                // successful login message
                 errorLabel.setText("Login successful!");
                 errorLabel.setTextFill(Color.GREEN);
                 errorLabel.setOpacity(0); // instantly hide
                 errorLabel.setVisible(true);
                 fadeInError(errorLabel);
 
-                // successful login message
                 System.out.println("Login successful! Token: " + SessionManager.getToken());
 
-                // load mainPage.fxml and switch scenes
-                Parent root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
+                // load mainPage.fxml and populate product cards
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
+                Parent root = fxmlLoader.load();
+
+                MainPageController mainPageController = fxmlLoader.getController();
+                mainPageController.populate(null); // we pass null because there's no ActionEvent here
+
                 vbox.getScene().setRoot(root);
             } else {
                 // show login error message
@@ -159,9 +164,6 @@ public class LoginController implements Initializable {
                 errorLabel.setOpacity(0); // instantly hide
                 errorLabel.setVisible(true);
                 fadeInError(errorLabel);
-
-                System.out.println("Login failed. Server responded with code: " + responseCode);
-                System.out.println("Response body: " + responseBody);
             }
         } catch (Exception e) {
             e.printStackTrace();
