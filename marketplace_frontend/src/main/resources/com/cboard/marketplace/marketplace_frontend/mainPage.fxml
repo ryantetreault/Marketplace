@@ -11,6 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.control.Button?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1002.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.MainPageController">
    <children>
       <HBox prefHeight="86.0" prefWidth="1002.0" styleClass="pane" stylesheets="@styles.css">
@@ -59,10 +60,13 @@
          </children>
       </HBox>
       <ScrollPane fx:id="scrollPane" prefHeight="619.0" prefWidth="1002.0" stylesheets="@styles.css" />
-      <VBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="1002.0" style="-fx-border-color: grey;" styleClass="pane" stylesheets="@styles.css" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="1002.0" style="-fx-border-color: grey;" styleClass="pane" stylesheets="@styles.css" spacing="10.0" VBox.vgrow="ALWAYS">
          <children>
+            <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40" onMouseClicked="#transactionsClicked" wrappingWidth="39.0" />
             <FontIcon fx:id="profileBtn" iconColor="WHITE" iconLiteral="fas-user" iconSize="40" onMouseClicked="#profileClicked" wrappingWidth="39.0" />
+            <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-backward" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0" />
+
          </children>
-      </VBox>
+      </HBox>
    </children>
 </VBox>

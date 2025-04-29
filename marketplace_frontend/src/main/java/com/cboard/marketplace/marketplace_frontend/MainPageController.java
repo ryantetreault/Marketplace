@@ -53,7 +53,8 @@ public class MainPageController {
         stage.show();
     }
 
-    public void openProductCard(MouseEvent mouseEvent) throws IOException {
+    public void openProductCard(MouseEvent mouseEvent) throws IOException
+    {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("productCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
@@ -62,5 +63,45 @@ public class MainPageController {
         stage.show();
 
 
+    }
+
+    public void handleBack(MouseEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            stage.show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void transactionsClicked(MouseEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("transactionPage.fxml"));
+            Parent root = loader.load();
+
+            TransactionPageController controller = loader.getController();
+            //controller.someFuncToPassDataToNextSceneHere();
+            //controller.setPage();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            stage.show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

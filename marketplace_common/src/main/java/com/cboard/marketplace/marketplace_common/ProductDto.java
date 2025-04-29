@@ -2,6 +2,9 @@ package com.cboard.marketplace.marketplace_common;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class ProductDto extends ItemDto
 {
     @NotNull(message = "Quantity is required...")
@@ -16,6 +19,14 @@ public class ProductDto extends ItemDto
         super(itemId, name, description, price, userId, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
         this.quantity = quantity;
         this.brand = brand;
+    }
+
+    @Override
+    public Map<String, String> getSpecificFields() {
+        Map<String, String> fields = new LinkedHashMap<>();
+        fields.put("Brand", brand);
+        fields.put("Quantity", String.valueOf(quantity));
+        return fields;
     }
 
 

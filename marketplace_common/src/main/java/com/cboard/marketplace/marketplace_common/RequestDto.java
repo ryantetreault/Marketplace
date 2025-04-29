@@ -2,6 +2,9 @@ package com.cboard.marketplace.marketplace_common;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class RequestDto extends ItemDto
 {
     @NotNull(message = "Deadline is required...")
@@ -16,6 +19,13 @@ public class RequestDto extends ItemDto
     {
         super(itemId, name, description, price, userId, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
         this.deadline = deadline;
+    }
+
+    @Override
+    public Map<String, String> getSpecificFields() {
+        Map<String, String> fields = new LinkedHashMap<>();
+        fields.put("Deadline", deadline);
+        return fields;
     }
 
 
