@@ -10,6 +10,9 @@ module com.cboard.marketplace.marketplace_frontend {
     requires com.google.gson;
     requires okhttp3; // Force Ikonli to load FontAwesome Solid icons
 
+    requires com.google.gson;
+    requires okhttp3;
+
     opens com.cboard.marketplace.marketplace_frontend to javafx.fxml;
     opens com.cboard.marketplace.marketplace_frontend.Request to com.google.gson;
     exports com.cboard.marketplace.marketplace_frontend;

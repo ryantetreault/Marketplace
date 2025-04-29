@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
+
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -52,6 +56,10 @@ public abstract class ItemDto
         this.image_name = image_name;
         this.image_type = image_type;
         this.image_date = image_date;
+    }
+
+    public Map<String, String> getSpecificFields() {
+        return Collections.emptyMap(); // base class default
     }
 
     public int getUserId() {
