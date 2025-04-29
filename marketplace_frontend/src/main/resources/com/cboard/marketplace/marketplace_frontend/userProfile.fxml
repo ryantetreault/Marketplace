@@ -60,9 +60,9 @@
       <Line stroke="#cccccc" strokeWidth="1" startX="0" endX="320" />
 
       <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
-         <Button fx:id="listNewBtn" text="Make New" onAction="#listNew" prefWidth="90" styleClass="blue-btn" />
+         <Button text="Help" onAction="#openHelpPopup" prefWidth="90" style="-fx-background-color: #00BFFF; -fx-text-fill: white; -fx-background-radius: 6;" />
          <Button text="Delete" prefWidth="90" style="-fx-background-color: red; -fx-text-fill: white; -fx-background-radius: 6;" />
-         <Button fx:id="closeProfileBtn" text="Close" onAction="#closeProfile" prefWidth="90" styleClass="blue-btn" />
+         <Button fx:id="closeProfileBtn" text="Close" onAction="#closeProfile" prefWidth="90" style="-fx-background-color: #00BFFF; -fx-text-fill: white; -fx-background-radius: 6;" />
       </HBox>
    </children>
 </VBox>

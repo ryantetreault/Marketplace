@@ -95,4 +95,12 @@ public class userProfileController implements Initializable {
             nameLabel.setText("Error Loading Profile");
         }
     }
+
+    @FXML
+    public void openHelpPopup() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpPopup.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
+    }
 }
