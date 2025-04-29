@@ -64,6 +64,7 @@ public class TransactionPageController
         Request request = new Request.Builder()
                 .url("http://localhost:8080/transaction/all")
                 .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
                 .build();
 
         try(Response response = HTTP_UTILITY.getClient().newCall(request).execute())
@@ -224,6 +225,9 @@ public class TransactionPageController
             MainPageController controller = loader.getController();
             //controller.someFuncToPassDataToNextSceneHere();
 
+            // populate product cards
+            controller.populate(null); // null because no ActionEvent here
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
@@ -242,5 +246,11 @@ public class TransactionPageController
         ft.play();
     }
 
-
+    @FXML
+    public void openHelpPopup() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpPopup.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
+    }
 }

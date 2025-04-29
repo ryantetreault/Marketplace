@@ -52,6 +52,7 @@
 
         <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="1002.0" style="-fx-border-color: grey;" styleClass="pane" stylesheets="@styles.css" spacing="10.0" VBox.vgrow="ALWAYS">
             <children>
+                <FontIcon fx:id="helpBtn" iconColor="WHITE" iconLiteral="fas-question" iconSize="40" onMouseClicked="#openHelpPopup" wrappingWidth="39.0" />
                 <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40" wrappingWidth="39.0" />
                 <FontIcon fx:id="profileBtn" iconColor="WHITE" iconLiteral="fas-user" iconSize="40" onMouseClicked="#profileClicked" wrappingWidth="39.0" />
                 <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-backward" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0" />

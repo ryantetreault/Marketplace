@@ -104,4 +104,12 @@ public class MainPageController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void openHelpPopup() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpPopup.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
+    }
 }
