@@ -1,6 +1,6 @@
 package com.cboard.marketplace.marketplace_frontend;
 
-import com.cboard.marketplace.marketplace_common.UserDto;
+import com.cboard.marketplace.marketplace_common.dto.UserDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
