@@ -2,16 +2,12 @@ package com.cboard.marketplace.marketplace_backend.controller;
 
 import com.cboard.marketplace.marketplace_backend.dao.UserDao;
 import com.cboard.marketplace.marketplace_backend.model.*;
-import com.cboard.marketplace.marketplace_backend.service.ItemService;
 import com.cboard.marketplace.marketplace_backend.service.RatingService;
 import com.cboard.marketplace.marketplace_backend.service.UserService;
-import org.apache.catalina.connector.Response;
+import com.cboard.marketplace.marketplace_common.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,18 +33,27 @@ public class UserController
     }
 
     @GetMapping("/api/profile")
-    public ResponseEntity<User> getProfile() {
+    public ResponseEntity<UserDto> getProfile() {
         //retrieve authenticated username directly
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         String username = auth.getName();
         User user = userDao.findByUsername(username).orElseThrow();
-        user.setPassword(null);
 
         Double avgRating = ratingService.calculateAverageRating(user.getUserId());
         user.setAverageRating(avgRating);
 
-        return ResponseEntity.ok(user);
+        // convert user to userDto
+        UserDto userDto = new UserDto(
+                user.getUserId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getUsername(),
+                user.getAverageRating()
+        );
+
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping("/api/rate/{userId}")
