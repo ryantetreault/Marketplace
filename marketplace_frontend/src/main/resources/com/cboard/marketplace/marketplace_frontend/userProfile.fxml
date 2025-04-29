@@ -33,7 +33,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </HBox>
-      <Label alignment="CENTER" contentDisplay="TOP" prefHeight="36.0" prefWidth="368.0" text="NAME OF USER  ">
+      <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="TOP" prefHeight="36.0" prefWidth="368.0" text="NAME OF USER  ">
          <VBox.margin>
             <Insets />
          </VBox.margin>
