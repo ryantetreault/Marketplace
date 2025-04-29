@@ -2,7 +2,7 @@ package com.cboard.marketplace.marketplace_frontend;
 
 import com.cboard.marketplace.marketplace_common.dto.AuthResponse;
 import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
-import com.cboard.marketplace.marketplace_frontend.Request.SignupRequest;
+import com.cboard.marketplace.marketplace_common.dto.SignupRequest;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

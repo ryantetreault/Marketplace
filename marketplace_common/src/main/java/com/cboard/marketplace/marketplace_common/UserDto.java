@@ -2,12 +2,12 @@ package com.cboard.marketplace.marketplace_common;
 
 public class UserDto
 {
-    private int userId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String username;
-    private Double averageRating;
+    public int userId;
+    public String firstName;
+    public String lastName;
+    public String email;
+    public String username;
+    public Double averageRating;
 
     public UserDto() {
     }
