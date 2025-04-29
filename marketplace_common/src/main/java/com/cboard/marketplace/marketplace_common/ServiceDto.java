@@ -2,6 +2,9 @@ package com.cboard.marketplace.marketplace_common;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class ServiceDto extends ItemDto
 {
     @NotNull(message = "Duration is required...")
@@ -14,6 +17,13 @@ public class ServiceDto extends ItemDto
     {
         super(itemId, name, description, price, userId, category, releaseDate, available, location, itemType, image_name, image_type, image_date);
         this.durationMinutes = durationMinutes;
+    }
+
+    @Override
+    public Map<String, String> getSpecificFields() {
+        Map<String, String> fields = new LinkedHashMap<>();
+        fields.put("Duration [minutes]", String.valueOf(durationMinutes));
+        return fields;
     }
 
     public int getDurationMinutes()

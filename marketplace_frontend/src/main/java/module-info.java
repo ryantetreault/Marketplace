@@ -7,6 +7,9 @@ module com.cboard.marketplace.marketplace_frontend {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
 
+    requires com.google.gson;
+    requires okhttp3;
+
     opens com.cboard.marketplace.marketplace_frontend to javafx.fxml;
     exports com.cboard.marketplace.marketplace_frontend;
 }
