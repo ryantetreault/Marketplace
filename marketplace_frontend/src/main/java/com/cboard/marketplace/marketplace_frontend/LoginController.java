@@ -1,7 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 
 import com.cboard.marketplace.marketplace_common.dto.AuthResponse;
-import com.cboard.marketplace.marketplace_frontend.Request.LoginRequest;
+import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -150,12 +150,13 @@ public class LoginController implements Initializable {
 
                 System.out.println("Login successful! Token: " + SessionManager.getToken());
 
-                // load mainPage.fxml and populate product cards
+                // load mainPage.fxml
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
                 Parent root = fxmlLoader.load();
 
+                // populate product cards
                 MainPageController mainPageController = fxmlLoader.getController();
-                mainPageController.populate(null); // we pass null because there's no ActionEvent here
+                mainPageController.populate(null); // null because no ActionEvent here
 
                 vbox.getScene().setRoot(root);
             } else {

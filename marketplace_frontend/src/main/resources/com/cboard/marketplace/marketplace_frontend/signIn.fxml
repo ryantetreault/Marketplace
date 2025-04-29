@@ -29,7 +29,7 @@
       </Label>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="usernameField" promptText="Email" styleClass="info-box" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="usernameField" promptText="Username" styleClass="info-box" HBox.hgrow="ALWAYS" />
             <FontIcon iconColor="WHITE" iconLiteral="fas-user" iconSize="20" wrappingWidth="24.0">
                <HBox.margin>
                   <Insets left="10.0" />
