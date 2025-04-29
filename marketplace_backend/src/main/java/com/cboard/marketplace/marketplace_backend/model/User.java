@@ -1,6 +1,10 @@
 package com.cboard.marketplace.marketplace_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -14,7 +18,13 @@ public class User
     private String email;
     private String username;
     private String password;
+
+    @Transient
     private Double averageRating;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Rating> ratings = new ArrayList<>();
 
     public User() {
     }
@@ -83,5 +93,13 @@ public class User
 
     public void setAverageRating(Double averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

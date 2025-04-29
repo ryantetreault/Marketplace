@@ -6,6 +6,7 @@ module com.cboard.marketplace.marketplace_frontend {
     requires javafx.controls;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
+    // requires org.kordamp.ikonli.fontawesome5; // Force Ikonli to load FontAwesome Solid icons
 
     requires com.google.gson;
     requires okhttp3;
