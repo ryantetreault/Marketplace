@@ -15,8 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 import javafx.stage.Stage;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,10 +35,13 @@ import static com.cboard.marketplace.marketplace_frontend.AlertUtility.ALERT_UTI
 
 public class TransactionPageController
 {
+    private List<TransactionDto> transactions = new ArrayList<>();
     @FXML
     ScrollPane transactionContainer;
     @FXML
     VBox transactionListVBox;
+    @FXML
+    TextField searchField;
 
     public void initialize()
     {
@@ -43,6 +49,11 @@ public class TransactionPageController
         transactionListVBox.setPadding(new Insets(10));
         transactionContainer.setContent(transactionListVBox);
 
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            List<TransactionDto> filteredTransactions = filterTransactionsBySearch(newValue);
+            transactionListVBox.getChildren().clear(); // Clear old results
+            displayTransactions(filteredTransactions); // Show new results
+        });
 
 
         displayTransactions(getAllTransactions());
@@ -50,7 +61,6 @@ public class TransactionPageController
 
     private List<TransactionDto> getAllTransactions()
     {
-        List<TransactionDto> transactions = new ArrayList<>();
         Request request = new Request.Builder()
                 .url("http://localhost:8080/transaction/all")
                 .get()
@@ -76,17 +86,45 @@ public class TransactionPageController
         return transactions;
     }
 
-    public List<TransactionDto> getTransactionBySearch()
+    private List<TransactionDto> filterTransactionsBySearch(String keyword)
     {
-        return new ArrayList<>();
+        if (keyword == null || keyword.isBlank())
+        {
+            return transactions;
+        }
+
+        String lowerKeyword = keyword.toLowerCase();
+
+        return transactions.stream()
+                .filter(transaction ->
+                        String.valueOf(transaction.getTransactionId()).contains(lowerKeyword) ||
+                                (transaction.getBuyer() != null && transaction.getBuyer().getUsername() != null &&
+                                        transaction.getBuyer().getUsername().toLowerCase().contains(lowerKeyword)) ||
+                                (transaction.getSeller() != null && transaction.getSeller().getUsername() != null &&
+                                        transaction.getSeller().getUsername().toLowerCase().contains(lowerKeyword)) ||
+                                (transaction.getItem() != null &&
+                                        ((transaction.getItem().getName() != null && transaction.getItem().getName().toLowerCase().contains(lowerKeyword)) ||
+                                                (transaction.getItem().getDescription() != null && transaction.getItem().getDescription().toLowerCase().contains(lowerKeyword)) ||
+                                                (transaction.getItem().getCategory() != null && transaction.getItem().getCategory().toLowerCase().contains(lowerKeyword)) ||
+                                                (transaction.getItem().getLocation() != null && transaction.getItem().getLocation().toLowerCase().contains(lowerKeyword)) ||
+                                                (transaction.getItem().getItemType() != null && transaction.getItem().getItemType().toLowerCase().contains(lowerKeyword)) ||
+                                                String.valueOf(transaction.getItem().getPrice()).contains(lowerKeyword) ||
+                                                (transaction.getItem().getReleaseDate() != null && transaction.getItem().getReleaseDate().toLowerCase().contains(lowerKeyword)))
+                                )
+                )
+                .toList();
     }
+
 
     public void displayTransactions(List<TransactionDto> transactionsToDisplay)
     {
+        transactionListVBox.getChildren().clear();
+
         for (TransactionDto transaction : transactionsToDisplay)
         {
             VBox card = createTransactionCard(transaction);
             transactionListVBox.getChildren().add(card);
+            fadeInNode(card);
         }
 
     }
@@ -195,6 +233,13 @@ public class TransactionPageController
         {
             e.printStackTrace();
         }
+    }
+
+    private void fadeInNode(Node node) {
+        FadeTransition ft = new FadeTransition(Duration.millis(300), node); // 300ms duration
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
     }
 
 
