@@ -25,16 +25,15 @@ import java.io.IOException;
 
 import okhttp3.Request;
 import okhttp3.Response;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
 import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
 import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.TooltipUtility.TOOLTIP_UTILITY;
 
 public class userProfileController implements Initializable
 {
@@ -57,6 +56,22 @@ public class userProfileController implements Initializable
     TextField searchField;
     @FXML
     Label containerLabel;
+    @FXML
+    FontIcon profileBtn;
+    @FXML
+    FontIcon transactionBtn;
+    @FXML
+    FontIcon helpBtn;
+    @FXML
+    FontIcon backBtn;
+    @FXML
+    FontIcon curListingsBtn;
+    @FXML
+    FontIcon boughtBtn;
+    @FXML
+    FontIcon soldBtn;
+    @FXML
+    FontIcon deleteBtn;
 
     public void closeProfile(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
@@ -85,6 +100,17 @@ public class userProfileController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        TOOLTIP_UTILITY.attachTooltips(Map.of(
+                profileBtn, "Profile",
+                transactionBtn, "Transactions",
+                helpBtn, "Help",
+                backBtn, "Home",
+                curListingsBtn, "Current Listings",
+                boughtBtn, "Items Bought",
+                soldBtn, "Items Sold",
+                deleteBtn, "Delete Account"
+
+        ));
         loadUserProfile();
 
         objListVBox = new VBox(10);

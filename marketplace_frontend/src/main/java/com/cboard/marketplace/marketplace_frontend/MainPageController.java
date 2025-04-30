@@ -6,20 +6,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.TooltipUtility.TOOLTIP_UTILITY;
+
 
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 public class MainPageController {
     @FXML
@@ -30,6 +35,22 @@ public class MainPageController {
     ScrollPane scrollPane;
     @FXML
     FontIcon profileBtn;
+    @FXML
+    FontIcon transactionBtn;
+    @FXML
+    FontIcon helpBtn;
+    @FXML
+    FontIcon backBtn;
+
+    public void initialize()
+    {
+        TOOLTIP_UTILITY.attachTooltips(Map.of(
+                profileBtn, "Profile",
+                transactionBtn, "Transactions",
+                //helpBtn, "Help",
+                backBtn, "Sign Out"
+        ));
+    }
     
     public void populate(javafx.event.ActionEvent actionEvent) throws IOException {
         //FileChooser fileChooser = new FileChooser();

@@ -7,8 +7,8 @@ public enum StageUtility
 {
     STAGE_UTILITY;
 
-    private static final int STAGE_WIDTH = 1100;
-    private static final int STAGE_HEIGHT = 750;
+    private static final Integer STAGE_WIDTH = 1100;
+    private static final Integer STAGE_HEIGHT = 750;
 
     public static void switchStage(Stage stage)
     {

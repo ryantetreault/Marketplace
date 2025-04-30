@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.layout.Region?>
+
 
 <?import javafx.scene.control.Button?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1002.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.MainPageController">
@@ -24,6 +26,15 @@
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </ImageView>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/OwlSwap Logo - Transparent.png" />
+               </image>
+            </ImageView>
+
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="1002.0">

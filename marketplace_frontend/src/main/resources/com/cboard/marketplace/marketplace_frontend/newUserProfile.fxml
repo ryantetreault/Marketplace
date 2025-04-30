@@ -38,6 +38,8 @@
                     </HBox.margin>
                 </ImageView>
 
+                <Region HBox.hgrow="ALWAYS"/>
+
                 <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@images/OwlSwap Logo - Transparent.png" />
