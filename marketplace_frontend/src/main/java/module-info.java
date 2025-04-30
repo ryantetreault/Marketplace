@@ -14,4 +14,6 @@ module com.cboard.marketplace.marketplace_frontend {
     opens com.cboard.marketplace.marketplace_frontend to javafx.fxml;
     opens com.cboard.marketplace.marketplace_frontend.Request to com.google.gson;
     exports com.cboard.marketplace.marketplace_frontend;
+    exports com.cboard.marketplace.marketplace_frontend.Utility;
+    opens com.cboard.marketplace.marketplace_frontend.Utility to javafx.fxml;
 }

@@ -2,6 +2,7 @@ package com.cboard.marketplace.marketplace_frontend;
 
 import com.cboard.marketplace.marketplace_common.dto.AuthResponse;
 import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
+import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;

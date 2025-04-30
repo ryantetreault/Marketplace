@@ -1,4 +1,4 @@
-package com.cboard.marketplace.marketplace_frontend;
+package com.cboard.marketplace.marketplace_frontend.Utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
