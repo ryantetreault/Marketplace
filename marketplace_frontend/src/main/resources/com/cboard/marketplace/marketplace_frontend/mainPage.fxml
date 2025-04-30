@@ -14,7 +14,7 @@
 <?import javafx.scene.control.Button?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1002.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.MainPageController">
    <children>
-      <HBox prefHeight="86.0" prefWidth="1002.0" styleClass="pane" stylesheets="@styles.css">
+      <HBox prefHeight="80.0" prefWidth="1050.0" styleClass="pane" stylesheets="@styles.css">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -64,7 +64,7 @@
          <children>
             <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40" onMouseClicked="#transactionsClicked" wrappingWidth="39.0" />
             <FontIcon fx:id="profileBtn" iconColor="WHITE" iconLiteral="fas-user" iconSize="40" onMouseClicked="#newProfileClicked" wrappingWidth="39.0" />
-            <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-backward" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0" />
+            <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0" />
 
          </children>
       </HBox>

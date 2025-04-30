@@ -2,6 +2,7 @@ package com.cboard.marketplace.marketplace_common;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,6 +28,21 @@ public class ProductDto extends ItemDto
         fields.put("Brand", brand);
         fields.put("Quantity", String.valueOf(quantity));
         return fields;
+    }
+
+    @Override
+    public void setSpecificFields(Map<String, String> fields)
+    {
+        if (fields.containsKey("Brand")) {
+            this.brand = fields.get("Brand");
+        }
+        if (fields.containsKey("Quantity")) {
+            try {
+                this.quantity = Integer.parseInt(fields.get("Quantity"));
+            } catch (NumberFormatException e) {
+                this.quantity = 0; // or fallback/default
+            }
+        }
     }
 
 

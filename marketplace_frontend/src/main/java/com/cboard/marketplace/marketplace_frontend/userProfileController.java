@@ -34,6 +34,7 @@ import java.util.ResourceBundle;
 
 import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
 import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
 
 public class userProfileController implements Initializable
 {
@@ -362,7 +363,7 @@ public class userProfileController implements Initializable
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {
@@ -381,7 +382,7 @@ public class userProfileController implements Initializable
 
             stage.setScene(scene);
 
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(Exception e)
         {

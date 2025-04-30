@@ -30,7 +30,16 @@
      -fx-background-radius: 5px;
      -fx-text-fill: #ffffff;
  }
+
+/* Default: black text for all text fields */
 .text-field, .password-field {
-    -fx-text-fill: #ffffff; /* white text inside */
-    -fx-prompt-text-fill: #aaaaaa; /* light gray placeholder */
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: #666666;
+}
+
+/* Override: if inside a login container */
+.login-pane .text-field,
+.login-pane .password-field {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #aaaaaa;
 }

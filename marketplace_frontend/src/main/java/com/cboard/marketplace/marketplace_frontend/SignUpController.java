@@ -5,19 +5,27 @@ import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import com.cboard.marketplace.marketplace_common.dto.SignupRequest;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import java.io.IOException;
+
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
 
 
 public class SignUpController {
@@ -36,7 +44,7 @@ public class SignUpController {
     }
 
     @FXML
-    public void handleSignUpButtonAction() {
+    public void handleSignUpButtonAction(ActionEvent event) {
 
         // find fields inside the vbox
         TextField firstNameField = (TextField) vbox.lookup("#firstNameField");
@@ -94,7 +102,8 @@ public class SignUpController {
                 // auto log in user to get token
                 autoLogin(username, password);
 
-                // load mainPage.fxml
+                switchToMain(event);
+                /*// load mainPage.fxml
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
                 Parent root = fxmlLoader.load();
 
@@ -102,7 +111,7 @@ public class SignUpController {
                 MainPageController mainPageController = fxmlLoader.getController();
                 mainPageController.populate(null); // null because no ActionEvent here
 
-                vbox.getScene().setRoot(root);
+                vbox.getScene().setRoot(root);*/
             } else {
                 // show backend error message if available
                 if (responseBody != null && !responseBody.isEmpty()) {
@@ -153,5 +162,19 @@ public class SignUpController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void switchToMain(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
+        Parent root = loader.load();
+
+        MainPageController controller = loader.getController();
+        //controller.someFuncToPassDataToNextSceneHere();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene newScene = new Scene(root);
+        stage.setScene(newScene);
+        STAGE_UTILITY.switchStage(stage);
     }
 }

@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
 
 
 import java.io.File;
@@ -47,10 +48,9 @@ public class MainPageController {
 
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         userProfileController userProfileController = fxmlLoader.getController();
-
         stage.setScene(scene);
 
-        stage.show();
+        STAGE_UTILITY.switchStage(stage);
     }
 
     public void newProfileClicked(MouseEvent event) throws IOException
@@ -63,7 +63,7 @@ public class MainPageController {
 
         stage.setScene(scene);
 
-        stage.show();
+        STAGE_UTILITY.switchStage(stage);
     }
 
     public void openProductCard(MouseEvent mouseEvent) throws IOException
@@ -110,7 +110,7 @@ public class MainPageController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {

@@ -26,7 +26,7 @@
       fx:controller="com.cboard.marketplace.marketplace_frontend.userProfileController">
 
     <children>
-        <HBox prefHeight="86.0" prefWidth="1002.0" styleClass="pane" stylesheets="@styles.css">
+        <HBox prefHeight="80.0" prefWidth="1050.0" styleClass="pane" stylesheets="@styles.css">
             <children>
 
                 <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -114,13 +114,15 @@
                     <Tooltip text="Delete Profile" />
                 </FontIcon>
 
-                <FontIcon fx:id="helpBtn" iconColor="PURPLE" iconLiteral="fas-plus" iconSize="25" onMouseClicked="#openHelpPopup">
-                    <Tooltip text="Help" />
-                </FontIcon>
+
 
 
                 <Region HBox.hgrow="ALWAYS"/>
 
+
+                <FontIcon fx:id="helpBtn" iconColor="PURPLE" iconLiteral="fas-question" iconSize="40" onMouseClicked="#openHelpPopup">
+                    <Tooltip text="Help" />
+                </FontIcon>
 
                 <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" onMouseClicked="#loadTransactionPage" iconSize="40" wrappingWidth="39.0">
                         <Tooltip text="Transactions" />
@@ -128,7 +130,7 @@
                 <FontIcon fx:id="profileBtn" iconColor="WHITE" iconLiteral="fas-user" iconSize="40" wrappingWidth="39.0">
                     <Tooltip text="Profile" />
                 </FontIcon>
-                <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-backward" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0">
+                <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-home" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0">
                     <Tooltip text="Back" />
                 </FontIcon>
 

@@ -23,6 +23,7 @@ import java.util.List;
 
 import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
 import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
 
 public class TransactionPageController
 {
@@ -83,7 +84,7 @@ public class TransactionPageController
 
     public void profileClicked(MouseEvent mouseEvent) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("userProfile.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("newUserProfile.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
@@ -93,7 +94,7 @@ public class TransactionPageController
 
         stage.setScene(scene);
 
-        stage.show();
+        STAGE_UTILITY.switchStage(stage);
     }
 
     public void handleBack(MouseEvent event)
@@ -109,12 +110,20 @@ public class TransactionPageController
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void openHelpPopup() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpPopup.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
     }
 
 
