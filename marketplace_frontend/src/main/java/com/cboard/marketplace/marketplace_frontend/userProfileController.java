@@ -1,24 +1,49 @@
 package com.cboard.marketplace.marketplace_frontend;
 
+import com.cboard.marketplace.marketplace_common.ItemDto;
+import com.cboard.marketplace.marketplace_common.TransactionDto;
 import com.cboard.marketplace.marketplace_common.dto.UserDto;
+import com.cboard.marketplace.marketplace_frontend.Utility.ItemRenderer;
+import com.cboard.marketplace.marketplace_frontend.Utility.TransactionRenderer;
+import com.fasterxml.jackson.core.type.TypeReference;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
-public class userProfileController implements Initializable {
+import static com.cboard.marketplace.marketplace_frontend.AlertUtility.ALERT_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.HttpUtility.HTTP_UTILITY;
+
+public class userProfileController implements Initializable
+{
+    private List<TransactionDto> transactions = new ArrayList<>();
+    private List<ItemDto> items = new ArrayList<>();
+    private UserDto user;
     @FXML
     private Label nameLabel;
     @FXML
@@ -27,6 +52,14 @@ public class userProfileController implements Initializable {
     private Label usernameLabel;
     @FXML
     private Label ratingLabel;
+    @FXML
+    ScrollPane objContainer;
+    @FXML
+    VBox objListVBox;
+    @FXML
+    TextField searchField;
+    @FXML
+    Label containerLabel;
 
     public void closeProfile(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
@@ -53,9 +86,167 @@ public class userProfileController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources)
+    {
         loadUserProfile();
+
+        objListVBox = new VBox(10);
+        objListVBox.setPadding(new Insets(10));
+        objContainer.setContent(objListVBox);
+
+        nameLabel.setText(user.getFirstName() + " " + user.getLastName());
+        emailLabel.setText("Email: " + user.getEmail());
+        usernameLabel.setText("Username: " + user.getUsername());
+        ratingLabel.setText("Average Rating: " +
+                (user.getAverageRating() != null ? String.format("%.2f", user.getAverageRating()) : "No ratings yet")
+        );
+
+        curListingsClick();
+
     }
+
+    public void curListingsClick()
+    {
+        containerLabel.setText("Current Listings");
+
+        getItems();
+
+
+        try
+        {
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                List<ItemDto> filteredItems = ItemRenderer.filterItemsBySearch(items, newValue);
+                objListVBox.getChildren().clear(); // Clear old results
+                ItemRenderer.displayItems(objListVBox, objContainer, items, filteredItems); // Show new results
+            });
+        }
+        catch(Exception e)
+        {
+            System.out.println("Keyboard error");
+        }
+
+        ItemRenderer.displayItems(objListVBox, objContainer, items, items); // Show new results
+
+    }
+
+    public void boughtClick()
+    {
+        containerLabel.setText("Items Purchased");
+
+        getTransactions(0);
+
+        try
+        {
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                List<TransactionDto> filteredTransactions = TransactionRenderer.filterTransactionsBySearch(transactions, newValue);
+                objListVBox.getChildren().clear(); // Clear old results
+                TransactionRenderer.displayTransactions(objListVBox, objContainer, transactions, filteredTransactions);
+            });
+        }
+        catch(Exception e)
+        {
+            System.out.println("Keyboard error");
+        }
+
+        TransactionRenderer.displayTransactions(objListVBox, objContainer, transactions, transactions);
+
+    }
+
+    public void soldClick()
+    {
+        containerLabel.setText("Items Sold");
+
+        getTransactions(1);
+
+        try
+        {
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                List<TransactionDto> filteredTransactions = TransactionRenderer.filterTransactionsBySearch(transactions, newValue);
+                objListVBox.getChildren().clear(); // Clear old results
+                TransactionRenderer.displayTransactions(objListVBox, objContainer, transactions, filteredTransactions);
+            });
+        }
+        catch(Exception e)
+        {
+            System.out.println("Keyboard error");
+        }
+
+        TransactionRenderer.displayTransactions(objListVBox, objContainer, transactions, transactions);
+
+    }
+
+
+
+
+    private void getTransactions(int option)
+    {
+        String choice = "";
+        if(option == 0)
+            choice = "buyer";
+        if(option == 1)
+            choice = "seller";
+
+
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/transaction/" + choice + "/" + user.getUserId() + "/all")
+                .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try(Response response = HTTP_UTILITY.getClient().newCall(request).execute())
+        {
+            if(response.isSuccessful() && response.body() != null)
+            {
+                String responseBody = response.body().string();
+                transactions = HTTP_UTILITY.getObjMapper().readValue(responseBody, new TypeReference<List<TransactionDto>>() {} ) ;
+            }
+            else
+            {
+                System.out.println("Server" + response.code());
+                ALERT_UTILITY.showAlert("ERROR", "Error loading transactions...");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private void getItems()
+    {
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/item/" + user.getUserId() + "/owner")
+                .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try(Response response = HTTP_UTILITY.getClient().newCall(request).execute())
+        {
+            if(response.isSuccessful() && response.body() != null)
+            {
+                String responseBody = response.body().string();
+                items = HTTP_UTILITY.getObjMapper().readValue(responseBody, new TypeReference<List<ItemDto>>() {} ) ;
+            }
+            else
+            {
+                System.out.println("Server" + response.code());
+                ALERT_UTILITY.showAlert("ERROR", "Error loading items...");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void deleteClick()
+    {
+        return;
+    }
+
 
     private void loadUserProfile() {
         try {
@@ -70,14 +261,8 @@ public class userProfileController implements Initializable {
             int responseCode = response.code();
 
             if (response.isSuccessful()) {
-                UserDto user = HttpUtility.HTTP_UTILITY.getGson().fromJson(responseBody, UserDto.class);
+                user = HttpUtility.HTTP_UTILITY.getGson().fromJson(responseBody, UserDto.class);
 
-                nameLabel.setText(user.getFirstName() + " " + user.getLastName());
-                emailLabel.setText("Email: " + user.getEmail());
-                usernameLabel.setText("Username: " + user.getUsername());
-                ratingLabel.setText("Average Rating: " +
-                        (user.getAverageRating() != null ? String.format("%.2f", user.getAverageRating()) : "No ratings yet")
-                );
 
 //                if (user != null && user.getFirstName() != null && user.getLastName() != null) {
 //                    System.out.println("DEBUG: Parsed user = " + user.getFirstName() + " " + user.getLastName());
@@ -103,4 +288,27 @@ public class userProfileController implements Initializable {
         stage.setScene(new Scene(loader.load()));
         stage.show();
     }
+
+    public void handleBack(MouseEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
+            Parent root = loader.load();
+
+            MainPageController controller = loader.getController();
+            //controller.someFuncToPassDataToNextSceneHere();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            stage.show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 }
