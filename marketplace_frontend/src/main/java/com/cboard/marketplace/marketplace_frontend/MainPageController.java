@@ -1,6 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -110,6 +111,19 @@ public class MainPageController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpPopup.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(loader.load()));
+        stage.show();
+    }
+
+    @FXML
+    public void handleNewListing(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("listNew.fxml"));
+        Parent root = loader.load();
+
+        ListNewController controller = loader.getController();
+        controller.setUserId(SessionManager.getUserIdFromToken());
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
         stage.show();
     }
 }

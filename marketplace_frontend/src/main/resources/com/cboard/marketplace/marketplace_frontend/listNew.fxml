@@ -35,7 +35,7 @@
                <children>
                   <TextField promptText="Listing Name" />
                   <TextField promptText="Price" />
-                  <TextField promptText="Location" />
+                  <ComboBox fx:id="locationDropdown" promptText="Location" />
                   <ComboBox prefHeight="25.0" prefWidth="203.0" promptText="Service Type" />
                   <TextField promptText="Brand" />
                </children>

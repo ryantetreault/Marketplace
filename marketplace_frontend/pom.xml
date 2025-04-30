@@ -101,6 +101,12 @@
             <version>2.8.9</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>21</version> <!-- use the same version as the rest of your JavaFX modules -->
+        </dependency>
+
     </dependencies>
 
     <build>

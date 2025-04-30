@@ -34,6 +34,7 @@ public abstract class ItemDto
     private String releaseDate;
     private boolean available;
     private String location;
+    private Integer locationId;
     private String itemType;
     private String image_name;
     private String image_type;
@@ -52,6 +53,23 @@ public abstract class ItemDto
         this.releaseDate = releaseDate;
         this.available = available;
         this.location = location;
+        this.itemType = itemType;
+        this.image_name = image_name;
+        this.image_type = image_type;
+        this.image_date = image_date;
+    }
+
+    public ItemDto(int itemId, String name, String description, Double price, int userId, String category, String releaseDate, boolean available, String location, Integer locationId, String itemType, String image_name, String image_type, byte[] image_date) {
+        this.itemId = itemId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.userId = userId;
+        this.category = category;
+        this.releaseDate = releaseDate;
+        this.available = available;
+        this.location = location;
+        this.locationId = locationId;
         this.itemType = itemType;
         this.image_name = image_name;
         this.image_type = image_type;
@@ -132,6 +150,14 @@ public abstract class ItemDto
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
     @JsonTypeId //prevents duplication when fetching from database ?
