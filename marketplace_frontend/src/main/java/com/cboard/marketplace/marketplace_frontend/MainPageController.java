@@ -53,6 +53,19 @@ public class MainPageController {
         stage.show();
     }
 
+    public void newProfileClicked(MouseEvent event) throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("newUserProfile.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        userProfileController userProfileController = fxmlLoader.getController();
+
+        stage.setScene(scene);
+
+        stage.show();
+    }
+
     public void openProductCard(MouseEvent mouseEvent) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("productCard.fxml"));

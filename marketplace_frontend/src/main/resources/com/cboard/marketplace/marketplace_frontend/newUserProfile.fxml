@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Tooltip?>
+<VBox maxHeight="-Infinity"
+      maxWidth="-Infinity"
+      minHeight="-Infinity"
+      minWidth="-Infinity"
+      prefHeight="874.0"
+      prefWidth="1002.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cboard.marketplace.marketplace_frontend.userProfileController">
+
+    <children>
+        <HBox prefHeight="86.0" prefWidth="1002.0" styleClass="pane" stylesheets="@styles.css">
+            <children>
+
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/WestfieldStateLogo.png" />
+                    </image>
+                    <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                    </HBox.margin>
+                </ImageView>
+
+                <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/OwlSwap Logo - Transparent.png" />
+                    </image>
+                </ImageView>
+
+            </children>
+        </HBox>
+
+
+        <HBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="1002.0" spacing="25.0">
+            <children>
+                <Label prefHeight="36.0" prefWidth="187.0" text="User Profile" textFill="#141414">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
+                </Label>
+
+
+                <TextField fx:id="searchField" promptText="Search..." prefWidth="300.0" />
+
+            </children>
+        </HBox>
+
+        <VBox spacing="6.0" alignment="CENTER"
+              style="-fx-background-color: white;
+                   -fx-padding: 15;
+                   -fx-border-color: #ddd;
+                   -fx-border-radius: 8;
+                   -fx-background-radius: 8;
+                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 4, 0, 0, 1);">
+            <Label fx:id="nameLabel" style="-fx-font-size: 13.5px; -fx-text-fill: #555;" />
+            <Label fx:id="emailLabel" style="-fx-font-size: 13.5px; -fx-text-fill: #555;" />
+            <Label fx:id="usernameLabel" style="-fx-font-size: 13.5px; -fx-text-fill: #555;" />
+            <Label fx:id="ratingLabel" style="-fx-font-size: 13.5px; -fx-text-fill: #555;" />
+        </VBox>
+
+        <HBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="1002.0" spacing="25.0">
+            <children>
+                <Label fx:id="containerLabel" prefHeight="36.0" prefWidth="187.0" text="Listings" textFill="#141414">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </HBox.margin>
+                </Label>
+
+            </children>
+        </HBox>
+
+
+        <ScrollPane fx:id="objContainer" prefHeight="619.0" prefWidth="1002.0" stylesheets="@styles.css" />
+
+
+        <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="1002.0" style="-fx-border-color: grey;" styleClass="pane" stylesheets="@styles.css" spacing="10.0" VBox.vgrow="ALWAYS">
+            <children>
+                <FontIcon fx:id="curListingsBtn" iconColor="WHITE" iconLiteral="fas-warehouse" iconSize="25" onMouseClicked="#curListingsClick">
+                    <Tooltip text="Current Listings" />
+                </FontIcon>
+
+                <FontIcon fx:id="boughtBtn" iconColor="ORANGE" iconLiteral="fas-money-bill-alt" iconSize="25" onMouseClicked="#boughtClick">
+                    <Tooltip text="Items Bought" />
+                </FontIcon>
+
+                <FontIcon fx:id="soldBtn" iconColor="GREEN" iconLiteral="fas-hand-holding-usd" iconSize="25" onMouseClicked="#soldClick">
+                    <Tooltip text="Items Sold" />
+                </FontIcon>
+
+                <FontIcon fx:id="deleteBtn" iconColor="RED" iconLiteral="fas-user-slash" iconSize="25" onMouseClicked="#deleteClick">
+                    <Tooltip text="Delete Profile" />
+                </FontIcon>
+
+                <FontIcon fx:id="helpBtn" iconColor="PURPLE" iconLiteral="fas-plus" iconSize="25" onMouseClicked="#openHelpPopup">
+                    <Tooltip text="Help" />
+                </FontIcon>
+
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+
+                <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" onMouseClicked="#loadTransactionPage" iconSize="40" wrappingWidth="39.0">
+                        <Tooltip text="Transactions" />
+                </FontIcon>
+                <FontIcon fx:id="profileBtn" iconColor="WHITE" iconLiteral="fas-user" iconSize="40" wrappingWidth="39.0">
+                    <Tooltip text="Profile" />
+                </FontIcon>
+                <FontIcon fx:id="backBtn" iconColor="WHITE" iconLiteral="fas-backward" iconSize="40" onMouseClicked="#handleBack" wrappingWidth="39.0">
+                    <Tooltip text="Back" />
+                </FontIcon>
+
+            </children>
+        </HBox>
+    </children>
+</VBox>

@@ -13,7 +13,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1002.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.TransactionPageController">
+<VBox maxHeight="-Infinity"
+      maxWidth="-Infinity"
+      minHeight="-Infinity"
+      minWidth="-Infinity"
+      prefHeight="874.0"
+      prefWidth="1002.0"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cboard.marketplace.marketplace_frontend.TransactionPageController">
+
     <children>
         <HBox prefHeight="86.0" prefWidth="1002.0" styleClass="pane" stylesheets="@styles.css">
             <children>
