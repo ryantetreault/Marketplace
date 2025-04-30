@@ -1,38 +1,28 @@
 package com.cboard.marketplace.marketplace_frontend;
 
-import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_common.TransactionDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.TransactionRenderer;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.gson.reflect.TypeToken;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.animation.FadeTransition;
-import javafx.util.Duration;
 import javafx.stage.Stage;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static com.cboard.marketplace.marketplace_frontend.HttpUtility.HTTP_UTILITY;
-import static com.cboard.marketplace.marketplace_frontend.AlertUtility.ALERT_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
 
 public class TransactionPageController
 {

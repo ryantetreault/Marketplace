@@ -122,7 +122,7 @@
                 <Region HBox.hgrow="ALWAYS"/>
 
 
-                <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40" wrappingWidth="39.0">
+                <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" onMouseClicked="#loadTransactionPage" iconSize="40" wrappingWidth="39.0">
                         <Tooltip text="Transactions" />
                 </FontIcon>
                 <FontIcon fx:id="profileBtn" iconColor="WHITE" iconLiteral="fas-user" iconSize="40" wrappingWidth="39.0">

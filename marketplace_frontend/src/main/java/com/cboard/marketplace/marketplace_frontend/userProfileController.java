@@ -3,12 +3,11 @@ package com.cboard.marketplace.marketplace_frontend;
 import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_common.TransactionDto;
 import com.cboard.marketplace.marketplace_common.dto.UserDto;
+import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import com.cboard.marketplace.marketplace_frontend.Utility.ItemRenderer;
 import com.cboard.marketplace.marketplace_frontend.Utility.TransactionRenderer;
 import com.fasterxml.jackson.core.type.TypeReference;
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,28 +15,25 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
+
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static com.cboard.marketplace.marketplace_frontend.AlertUtility.ALERT_UTILITY;
-import static com.cboard.marketplace.marketplace_frontend.HttpUtility.HTTP_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
 
 public class userProfileController implements Initializable
 {
@@ -97,6 +93,7 @@ public class userProfileController implements Initializable
         nameLabel.setText(user.getFirstName() + " " + user.getLastName());
         emailLabel.setText("Email: " + user.getEmail());
         usernameLabel.setText("Username: " + user.getUsername());
+        System.out.println(user.getAverageRating());
         ratingLabel.setText("Average Rating: " +
                 (user.getAverageRating() != null ? String.format("%.2f", user.getAverageRating()) : "No ratings yet")
         );
@@ -242,9 +239,72 @@ public class userProfileController implements Initializable
     }
 
 
-    public void deleteClick()
+    public void deleteClick(MouseEvent event)
     {
-        return;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Are you sure you want to delete your account?");
+        alert.setContentText("This action cannot be undone.");
+
+        ButtonType confirmButton = new ButtonType("Delete");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(confirmButton, cancelButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == confirmButton)
+        {
+            deleteUser();
+
+            try
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+                stage.setScene(scene);
+
+                stage.show();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                ALERT_UTILITY.showAlert("ERROR", "Error loading transactions page...");
+            }
+        }
+
+    }
+
+    public void deleteUser()
+    {
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/user/" + user.getUserId() + "/delete")
+                .delete()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try(Response response = HTTP_UTILITY.getClient().newCall(request).execute())
+        {
+            if(response.isSuccessful() && response.body() != null)
+            {
+                String responseBody = response.body().string();
+                ALERT_UTILITY.showAlert("", responseBody);
+            }
+            else
+            {
+                String responseBody = response.body().string();
+                System.out.println("Server" + response.code());
+                ALERT_UTILITY.showAlert("ERROR", responseBody);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            ALERT_UTILITY.showAlert("ERROR", "Internal error...");
+        }
     }
 
 
@@ -307,6 +367,26 @@ public class userProfileController implements Initializable
         catch(IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public void loadTransactionPage(MouseEvent event)
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("transactionPage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+            stage.setScene(scene);
+
+            stage.show();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            ALERT_UTILITY.showAlert("ERROR", "Error loading transactions page...");
         }
     }
 

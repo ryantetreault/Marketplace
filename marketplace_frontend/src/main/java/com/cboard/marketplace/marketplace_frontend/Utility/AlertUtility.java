@@ -1,4 +1,4 @@
-package com.cboard.marketplace.marketplace_frontend;
+package com.cboard.marketplace.marketplace_frontend.Utility;
 
 import javafx.scene.control.Alert;
 
