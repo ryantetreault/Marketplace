@@ -121,7 +121,6 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
 
-
                 <FontIcon fx:id="transactionBtn" iconColor="WHITE" iconLiteral="fas-cash-register" onMouseClicked="#loadTransactionPage" iconSize="40" wrappingWidth="39.0">
                         <Tooltip text="Transactions" />
                 </FontIcon>

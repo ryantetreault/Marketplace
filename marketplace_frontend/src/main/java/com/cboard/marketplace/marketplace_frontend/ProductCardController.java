@@ -2,6 +2,7 @@ package com.cboard.marketplace.marketplace_frontend;
 
 import com.cboard.marketplace.marketplace_common.dto.LocationDto;
 import com.cboard.marketplace.marketplace_common.ItemDto;
+import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import com.google.gson.reflect.TypeToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

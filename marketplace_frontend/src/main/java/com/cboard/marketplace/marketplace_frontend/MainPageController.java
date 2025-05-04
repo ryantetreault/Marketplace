@@ -135,8 +135,7 @@ public class MainPageController {
         ListNewController controller = loader.getController();
         controller.setUserId(SessionManager.getUserIdFromToken());
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        Scene scene = ((Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 }

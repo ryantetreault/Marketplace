@@ -359,6 +359,9 @@ public class userProfileController implements Initializable
             MainPageController controller = loader.getController();
             //controller.someFuncToPassDataToNextSceneHere();
 
+            // populate product cards
+            controller.populate(null); // null because no ActionEvent here
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
