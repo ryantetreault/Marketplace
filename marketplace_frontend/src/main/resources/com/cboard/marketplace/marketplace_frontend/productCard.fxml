@@ -10,6 +10,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="360.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.ProductCardController">
    <children>
@@ -17,11 +20,7 @@
          <children>
             <StackPane prefHeight="179.0" prefWidth="175.0" style="-fx-background-color: transparent;">
                <children>
-                  <ImageView fitHeight="146.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/testPic.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="productImage" fitHeight="146.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </StackPane>
             <VBox prefHeight="122.0" prefWidth="206.0" style="-fx-background-color: transparent;">
@@ -30,6 +29,7 @@
                </HBox.margin>
                <children>
                   <Label text="PRICE:" />
+                  <Label fx:id="priceLabel" text="-" />
                   <Label text="LOCATION:" />
                   <Label text="POSTER:" />
                   <Label text="CATEGORY:" />
@@ -43,7 +43,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </HBox>
-      <Label text="NAME OF PRODUCT">
+      <Label fx:id="nameLabel" text="NAME OF PRODUCT">
          <VBox.margin>
             <Insets />
          </VBox.margin>
@@ -54,10 +54,18 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <TextArea editable="false" prefHeight="305.0" prefWidth="360.0" style="-fx-background-color: white;" text="DESCRIPTION">
+      <TextArea editable="false" prefHeight="120.0" prefWidth="360.0" style="-fx-background-color: white;" wrapText="true" >
          <padding>
             <Insets left="10.0" />
          </padding></TextArea>
+
+      <!-- Map + fallback message stacked -->
+      <StackPane prefHeight="300.0" prefWidth="360.0">
+         <children>
+            <WebView fx:id="mapView" prefHeight="300.0" prefWidth="360.0" />
+            <Label fx:id="noLocationLabel" text="No location selected." visible="false" style="-fx-text-fill: #444; -fx-font-size: 14px;" />
+         </children>
+      </StackPane>
       <HBox alignment="CENTER" prefHeight="65.0" prefWidth="360.0" styleClass="blue-panel" stylesheets="@styles.css">
          <children>
             <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="88.0" styleClass="blue-btn" text="Buy">

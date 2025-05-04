@@ -1,6 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -116,5 +117,25 @@ public class MainPageController {
         {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void openHelpPopup() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpPopup.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
+    }
+
+    @FXML
+    public void handleNewListing(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("listNew.fxml"));
+        Parent root = loader.load();
+
+        ListNewController controller = loader.getController();
+        controller.setUserId(SessionManager.getUserIdFromToken());
+
+        Scene scene = ((Node) event.getSource()).getScene();
+        scene.setRoot(root);
     }
 }
