@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10">
+    <TextField fx:id="nameField" promptText="Item Name"/>
+    <TextField fx:id="descriptionField" promptText="Description"/>
+    <TextField fx:id="priceField" promptText="Price"/>
+
+    <TextField fx:id="brandField" promptText="Brand"/>
+    <TextField fx:id="quantityField" promptText="Quantity"/>
+</VBox>

@@ -121,7 +121,6 @@
 
                 <Region HBox.hgrow="ALWAYS"/>
 
-
                 <FontIcon fx:id="helpBtn" iconColor="PURPLE" iconLiteral="fas-question" iconSize="40" onMouseClicked="#openHelpPopup">
                     <Tooltip text="Help" />
                 </FontIcon>
