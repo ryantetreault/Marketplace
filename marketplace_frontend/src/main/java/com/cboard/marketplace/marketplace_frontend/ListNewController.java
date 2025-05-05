@@ -44,6 +44,11 @@ public class ListNewController {
     @FXML
     private javafx.scene.control.Label errorLabel;
 
+    @FXML
+    private ComboBox<String> categoryComboBox;
+
+    private Map<String, Integer> categoryMap = new HashMap<>();
+
 
 
     public void closeListNew(ActionEvent event)
@@ -75,6 +80,7 @@ public class ListNewController {
 
         loadSafeLocations();
         loadItemTypes();
+        loadCategories();
 
         itemTypeComboBox.setOnAction(event -> handleItemTypeSelection());
     }
@@ -166,9 +172,10 @@ public class ListNewController {
 
     @FXML
     public void createListing(ActionEvent event) {
-        errorLabel.setText(""); // Clear previous errors
+        errorLabel.setText("");
 
         String selectedType = itemTypeComboBox.getValue();
+        String categoryName = categoryComboBox.getValue();
         String locationName = locationDropdown.getValue();
 
         selectedType =  selectedType.toLowerCase();
@@ -180,7 +187,13 @@ public class ListNewController {
 
         int locationId = locationMap.get(locationName);
         int userId = this.userId;
-        String category = "General";
+
+        String category = categoryComboBox.getValue();
+        if (category == null) {
+            errorLabel.setText("Please select a category.");
+            return;
+        }
+
         String releaseDate = java.time.LocalDate.now().toString();
         boolean available = true;
         String imageName = "placeholder.jpg";
@@ -287,6 +300,34 @@ public class ListNewController {
 
         } catch (Exception e) {
             errorLabel.setText("Something went wrong. Check your input.");
+            e.printStackTrace();
+        }
+    }
+
+    private void loadCategories() {
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/item/categories")
+                .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                String json = response.body().string();
+
+                Type listType = new TypeToken<List<Map<String, Object>>>() {}.getType();
+                List<Map<String, Object>> categories = HttpUtility.HTTP_UTILITY.getGson().fromJson(json, listType);
+
+                for (Map<String, Object> category : categories) {
+                    String name = (String) category.get("name");
+                    Integer id = ((Double) category.get("categoryId")).intValue();
+                    categoryComboBox.getItems().add(name);
+                    categoryMap.put(name, id);
+                }
+            } else {
+                System.out.println("Failed to load categories: " + response.code());
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
