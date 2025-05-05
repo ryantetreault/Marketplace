@@ -2,19 +2,26 @@ package com.cboard.marketplace.marketplace_frontend.Utility;
 
 import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_common.TransactionDto;
+import com.cboard.marketplace.marketplace_frontend.SessionManager;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
 
 public class ItemRenderer {
 
@@ -38,7 +45,7 @@ public class ItemRenderer {
     public static void showDetailedItem(VBox targetContainer, VBox parentList, ItemDto item, Runnable onBack) {
         VBox detailView = new VBox(10);
         detailView.setPadding(new Insets(10));
-        detailView.setStyle("-fx-background-color: #e0e0ff; -fx-border-color: darkblue; -fx-border-radius: 8px; -fx-background-radius: 8px;");
+        detailView.setStyle("-fx-background-color: #d0f0ff; -fx-border-color: darkblue; -fx-border-radius: 8px; -fx-background-radius: 8px;");
         detailView.setPrefWidth(900);
 
         Label itemName = new Label("Item: " + item.getName());
@@ -62,9 +69,119 @@ public class ItemRenderer {
             onBack.run();
         });
 
-        detailView.getChildren().add(backButton);
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(e -> {
+            ItemRenderer.showEditItemView(targetContainer, parentList, item, onBack);
+        });
+
+        detailView.getChildren().addAll(backButton, editButton);
 
         targetContainer.getChildren().setAll(detailView);
+    }
+
+    public static void showEditItemView(VBox targetContainer, VBox parentList, ItemDto item, Runnable onBack)
+    {
+        VBox editView = new VBox(10);
+        editView.setPadding(new Insets(10));
+        editView.setStyle("-fx-background-color: #fff0f0; -fx-border-color: darkred; -fx-border-radius: 8px; -fx-background-radius: 8px;");
+        editView.setPrefWidth(900);
+
+        TextField nameField = new TextField(item.getName());
+        nameField.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+        TextField priceField = new TextField(String.valueOf(item.getPrice()));
+        TextField categoryField = new TextField(item.getCategory());
+        TextField descriptionField = new TextField(item.getDescription());
+        TextField releaseDateField = new TextField(item.getReleaseDate());
+        TextField locationField = new TextField(item.getLocation());
+
+        editView.getChildren().addAll(
+                new Label("Name:"), nameField,
+                new Label("Price:"), priceField,
+                new Label("Category:"), categoryField,
+                new Label("Description:"), descriptionField,
+                new Label("Release Date:"), releaseDateField,
+                new Label("Location:"), locationField
+        );
+
+
+        Map<String, String> specificFields = item.getSpecificFields();
+        Map<String, TextField> dynamicFieldInputs = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : specificFields.entrySet()) {
+            Label label = new Label(entry.getKey() + ":");
+            TextField input = new TextField(entry.getValue());
+            dynamicFieldInputs.put(entry.getKey(), input);
+            editView.getChildren().addAll(label, input);
+        }
+
+
+        Button backButton = new Button("Cancel");
+        backButton.setOnAction(e -> {
+            targetContainer.getChildren().setAll(parentList.getChildren());
+            onBack.run();
+        });
+
+
+        Button saveButton = new Button("Save Changes");
+        saveButton.setOnAction(e -> {
+
+            item.setName(nameField.getText());
+            item.setPrice(Double.parseDouble(priceField.getText()));
+            item.setCategory(categoryField.getText());
+            item.setDescription(descriptionField.getText());
+            item.setReleaseDate(releaseDateField.getText());
+            item.setLocation(locationField.getText());
+
+            Map<String, String> updatedSpecifics = new HashMap<>();
+            for (Map.Entry<String, TextField> entry : dynamicFieldInputs.entrySet()) {
+                updatedSpecifics.put(entry.getKey(), entry.getValue().getText());
+            }
+            item.setSpecificFields(updatedSpecifics);
+
+
+            if(ItemRenderer.saveItem(item))
+            {
+                targetContainer.getChildren().setAll(parentList.getChildren());
+                onBack.run();
+            }
+        });
+
+        editView.getChildren().addAll(saveButton, backButton);
+        targetContainer.getChildren().setAll(editView);
+    }
+
+    public static boolean saveItem(ItemDto item)
+    {
+
+        // send HTTP PUT or PATCH request to update the item
+        try
+        {
+            String json = HTTP_UTILITY.getGson().toJson(item);
+            RequestBody body = RequestBody.create(json, HTTP_UTILITY.getJSON());
+            Request request = new Request.Builder()
+                    .url("http://localhost:8080/item/update")
+                    .put(body)
+                    .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                    .build();
+
+            Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute();
+            if (response.isSuccessful())
+            {
+                // reload parent list or show success
+                return true;
+            }
+            else
+            {
+                AlertUtility.ALERT_UTILITY.showAlert("Update Failed", "Error updating item.");
+            }
+
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            AlertUtility.ALERT_UTILITY.showAlert("Exception", "Something went wrong.");
+        }
+        return false;
+
     }
 
     public static List<ItemDto> filterItemsBySearch(List<ItemDto> items, String keyword)

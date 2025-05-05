@@ -80,6 +80,12 @@ public abstract class ItemDto
         return Collections.emptyMap(); // base class default
     }
 
+    public void setSpecificFields(Map<String, String> fields)
+    {
+        throw new UnsupportedOperationException("setSpecificFields not implemented for base ItemDto");
+
+    }
+
     public int getUserId() {
         return userId;
     }

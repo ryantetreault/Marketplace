@@ -25,15 +25,15 @@ import java.io.IOException;
 
 import okhttp3.Request;
 import okhttp3.Response;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
 import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.TooltipUtility.TOOLTIP_UTILITY;
 
 public class userProfileController implements Initializable
 {
@@ -56,34 +56,61 @@ public class userProfileController implements Initializable
     TextField searchField;
     @FXML
     Label containerLabel;
+    @FXML
+    FontIcon profileBtn;
+    @FXML
+    FontIcon transactionBtn;
+    @FXML
+    FontIcon helpBtn;
+    @FXML
+    FontIcon backBtn;
+    @FXML
+    FontIcon curListingsBtn;
+    @FXML
+    FontIcon boughtBtn;
+    @FXML
+    FontIcon soldBtn;
+    @FXML
+    FontIcon deleteBtn;
+    @FXML
+    FontIcon newListingBtn;
 
-    public void closeProfile(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        scene.setFill(Color.TRANSPARENT);
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-        MainPageController mainPageController = fxmlLoader.getController();
-        mainPageController.populate(actionEvent);
-        stage.setScene(scene);
 
-        stage.show();
-    }
+    public void listNew(MouseEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listNew.fxml"));
+            Parent root = loader.load();
 
-    public void listNew(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("listNew.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+            ListNewController controller = loader.getController();
 
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-
-
-        stage.setScene(scene);
-
-        stage.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            STAGE_UTILITY.switchStage(stage);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        TOOLTIP_UTILITY.attachTooltips(Map.of(
+                profileBtn, "Profile",
+                transactionBtn, "Transactions",
+                helpBtn, "Help",
+                backBtn, "Home",
+                curListingsBtn, "Current Listings",
+                boughtBtn, "Items Bought",
+                soldBtn, "Items Sold",
+                deleteBtn, "Delete Account",
+                newListingBtn, "List New"
+
+        ));
         loadUserProfile();
 
         objListVBox = new VBox(10);
@@ -365,7 +392,7 @@ public class userProfileController implements Initializable
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {
@@ -384,7 +411,7 @@ public class userProfileController implements Initializable
 
             stage.setScene(scene);
 
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(Exception e)
         {

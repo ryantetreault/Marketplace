@@ -28,6 +28,15 @@ public class RequestDto extends ItemDto
         return fields;
     }
 
+    @Override
+    public void setSpecificFields(Map<String, String> fields)
+    {
+        if (fields.containsKey("Deadline"))
+        {
+            this.deadline = fields.get("Deadline");
+        }
+    }
+
 
     public String getDeadline() {
         return deadline;

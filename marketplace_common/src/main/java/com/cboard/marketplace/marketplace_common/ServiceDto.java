@@ -26,6 +26,18 @@ public class ServiceDto extends ItemDto
         return fields;
     }
 
+    @Override
+    public void setSpecificFields(Map<String, String> fields)
+    {
+        if (fields.containsKey("Duration [minutes]")) {
+            try {
+                this.durationMinutes = Integer.parseInt(fields.get("Duration [minutes]"));
+            } catch (NumberFormatException e) {
+                this.durationMinutes = 0;
+            }
+        }
+    }
+
     public int getDurationMinutes()
     {
         return durationMinutes;

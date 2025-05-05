@@ -30,7 +30,33 @@
      -fx-background-radius: 5px;
      -fx-text-fill: #ffffff;
  }
+
+/* Default: black text for all text fields */
 .text-field, .password-field {
-    -fx-text-fill: #ffffff; /* white text inside */
-    -fx-prompt-text-fill: #aaaaaa; /* light gray placeholder */
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: #666666;
 }
+
+/* Override: if inside a login container */
+.login-pane .text-field,
+.login-pane .password-field {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #aaaaaa;
+}
+
+.tooltip {
+    -fx-font-size: 8px;
+    -fx-padding: 4 8 4 8;
+    -fx-background-color: BLUE;
+    -fx-text-fill: WHITE;
+    -fx-border-color: BLACK;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+/*.bg-scroll {
+    -fx-background-image: url("src/main/resources/com/cboard/marketplace/marketplace_frontend/images/OwlSwapLogo-Transparent.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}*/

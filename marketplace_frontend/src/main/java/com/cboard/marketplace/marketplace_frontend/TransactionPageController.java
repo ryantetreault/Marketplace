@@ -16,13 +16,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility.HTTP_UTILITY;
 import static com.cboard.marketplace.marketplace_frontend.Utility.AlertUtility.ALERT_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.TooltipUtility.TOOLTIP_UTILITY;
 
 public class TransactionPageController
 {
@@ -33,9 +37,24 @@ public class TransactionPageController
     VBox transactionListVBox;
     @FXML
     TextField searchField;
+    @FXML
+    FontIcon profileBtn;
+    @FXML
+    FontIcon transactionBtn;
+    @FXML
+    FontIcon helpBtn;
+    @FXML
+    FontIcon backBtn;
 
     public void initialize()
     {
+        TOOLTIP_UTILITY.attachTooltips(Map.of(
+                profileBtn, "Profile",
+                transactionBtn, "Transactions",
+                helpBtn, "Help",
+                backBtn, "Home"
+        ));
+
         transactions = getAllTransactions();
 
         transactionListVBox = new VBox(10);
@@ -83,7 +102,7 @@ public class TransactionPageController
 
     public void profileClicked(MouseEvent mouseEvent) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("userProfile.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("newUserProfile.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
@@ -93,7 +112,7 @@ public class TransactionPageController
 
         stage.setScene(scene);
 
-        stage.show();
+        STAGE_UTILITY.switchStage(stage);
     }
 
     public void handleBack(MouseEvent event)
@@ -112,14 +131,13 @@ public class TransactionPageController
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            stage.show();
+            STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     public void openHelpPopup() throws IOException {
@@ -128,4 +146,7 @@ public class TransactionPageController
         stage.setScene(new Scene(loader.load()));
         stage.show();
     }
+
+
+
 }

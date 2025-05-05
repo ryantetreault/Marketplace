@@ -5,9 +5,12 @@ import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
 import javafx.scene.Parent;
@@ -16,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -25,6 +29,8 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
 
 public class LoginController implements Initializable {
     @FXML
@@ -79,7 +85,7 @@ public class LoginController implements Initializable {
                 Parent fxml = loader.load();
 
                 Button loginButton = (Button) fxml.lookup("#loginButton");
-                loginButton.setOnAction(ev -> handleLoginButtonAction());
+                loginButton.setOnAction(ev -> handleLoginButtonAction(event));
 
                 vbox.getChildren().setAll(fxml);
             } catch (IOException ex) {
@@ -95,7 +101,7 @@ public class LoginController implements Initializable {
     private TextField passwordField;
 
     @FXML
-    public void handleLoginButtonAction() {
+    public void handleLoginButtonAction(ActionEvent event) {
         // find fields inside the vbox
         TextField usernameField = (TextField) vbox.lookup("#usernameField");
         TextField passwordField = (TextField) vbox.lookup("#passwordField");
@@ -151,7 +157,9 @@ public class LoginController implements Initializable {
 
                 System.out.println("Login successful! Token: " + SessionManager.getToken());
 
-                // load mainPage.fxml
+                switchToMain(event);
+
+                /*// load mainPage.fxml
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
                 Parent root = fxmlLoader.load();
 
@@ -159,7 +167,7 @@ public class LoginController implements Initializable {
                 MainPageController mainPageController = fxmlLoader.getController();
                 mainPageController.populate(null); // null because no ActionEvent here
 
-                vbox.getScene().setRoot(root);
+                vbox.getScene().setRoot(root);*/
             } else {
                 // show login error message
                 errorLabel.setText("Login failed. Please check your credentials.");
@@ -175,5 +183,20 @@ public class LoginController implements Initializable {
             errorLabel.setVisible(true);
             fadeInError(errorLabel);
         }
+    }
+
+    private void switchToMain(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
+        Parent root = loader.load();
+
+        MainPageController controller = loader.getController();
+        controller.populate(event);
+        //controller.someFuncToPassDataToNextSceneHere();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene newScene = new Scene(root);
+        stage.setScene(newScene);
+        STAGE_UTILITY.switchStage(stage);
     }
 }
