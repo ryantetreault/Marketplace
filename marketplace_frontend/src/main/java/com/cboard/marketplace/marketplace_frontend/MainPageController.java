@@ -1,6 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,15 +43,22 @@ public class MainPageController {
     FontIcon helpBtn;
     @FXML
     FontIcon backBtn;
+    @FXML
+    FontIcon newListingBtn;
+
 
     public void initialize()
     {
-        TOOLTIP_UTILITY.attachTooltips(Map.of(
-                profileBtn, "Profile",
-                transactionBtn, "Transactions",
-                //helpBtn, "Help",
-                backBtn, "Sign Out"
-        ));
+
+        TOOLTIP_UTILITY.attachTooltips(
+                TOOLTIP_UTILITY.safeMap(
+                            newListingBtn, "List New",
+                            profileBtn, "Profile",
+                            transactionBtn, "Transactions",
+                            helpBtn, "Help",
+                            backBtn, "Sign Out"
+                        )
+                );
     }
     
     public void populate(javafx.event.ActionEvent actionEvent) throws IOException {
@@ -149,7 +157,7 @@ public class MainPageController {
     }
 
     @FXML
-    public void handleNewListing(ActionEvent event) throws IOException {
+    public void handleNewListing(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("listNew.fxml"));
         Parent root = loader.load();
 

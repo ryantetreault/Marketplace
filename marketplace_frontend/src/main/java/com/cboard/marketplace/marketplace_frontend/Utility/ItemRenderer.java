@@ -45,7 +45,7 @@ public class ItemRenderer {
     public static void showDetailedItem(VBox targetContainer, VBox parentList, ItemDto item, Runnable onBack) {
         VBox detailView = new VBox(10);
         detailView.setPadding(new Insets(10));
-        detailView.setStyle("-fx-background-color: #e0e0ff; -fx-border-color: darkblue; -fx-border-radius: 8px; -fx-background-radius: 8px;");
+        detailView.setStyle("-fx-background-color: #d0f0ff; -fx-border-color: darkblue; -fx-border-radius: 8px; -fx-background-radius: 8px;");
         detailView.setPrefWidth(900);
 
         Label itemName = new Label("Item: " + item.getName());

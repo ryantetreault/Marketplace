@@ -53,3 +53,10 @@
     -fx-border-radius: 3;
     -fx-background-radius: 3;
 }
+
+/*.bg-scroll {
+    -fx-background-image: url("src/main/resources/com/cboard/marketplace/marketplace_frontend/images/OwlSwapLogo-Transparent.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}*/

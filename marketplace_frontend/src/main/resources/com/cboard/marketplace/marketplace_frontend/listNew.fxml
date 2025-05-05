@@ -14,6 +14,7 @@
 <?import java.lang.String?>
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.layout.Region?>
 <VBox fx:controller="com.cboard.marketplace.marketplace_frontend.ListNewController"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -33,6 +34,16 @@
                <Insets left="5.0" top="5.0" />
             </HBox.margin>
          </ImageView>
+
+         <Region HBox.hgrow="ALWAYS"/>
+
+         <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@images/OwlSwapLogo-Transparent.png" />
+            </image>
+         </ImageView>
+
+
       </children>
    </HBox>
 
@@ -86,19 +97,19 @@
          <Insets top="10.0" right="15.0" bottom="10.0" left="15.0"/>
       </padding>
       <children>
-         <!-- Cancel Button with Back Icon -->
-         <Button fx:id="submitBtn" onAction="#createListing" styleClass="blue-btn" prefWidth="40" prefHeight="40">
+
+         <Button fx:id="submitBtn" onAction="#createListing" styleClass="blue-btn" >
             <graphic>
-               <FontIcon iconLiteral="fas-plus" iconSize="40" iconColor="WHITE"/>
+               <FontIcon iconLiteral="fas-check-square" iconSize="40" iconColor="GREEN"/>
             </graphic>
          </Button>
 
-         <!-- Submit Button with Plus Icon -->
-         <Button fx:id="cancelBtn" onAction="#closeListNew" styleClass="blue-btn" prefWidth="40" prefHeight="40">
+         <Button fx:id="cancelBtn" onAction="#closeListNew" styleClass="blue-btn" >
             <graphic>
-               <FontIcon iconLiteral="fas-arrow-left" iconSize="40" iconColor="WHITE"/>
+               <FontIcon iconLiteral="fas-times" iconSize="40" iconColor="RED"/>
             </graphic>
          </Button>
+
       </children>
    </HBox>
 </VBox>

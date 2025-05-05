@@ -42,7 +42,7 @@
 
                 <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/OwlSwap Logo - Transparent.png" />
+                        <Image url="@images/OwlSwapLogo-Transparent.png" />
                     </image>
                 </ImageView>
 
@@ -95,10 +95,15 @@
         </HBox>
 
 
-        <ScrollPane fx:id="objContainer" prefHeight="619.0" prefWidth="1002.0" stylesheets="@styles.css" />
+        <ScrollPane fx:id="objContainer" prefHeight="619.0" prefWidth="1002.0" styleClass="bg-scroll" stylesheets="@styles.css" />
 
 
         <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="1002.0" style="-fx-border-color: grey;" styleClass="pane" stylesheets="@styles.css" spacing="10.0" VBox.vgrow="ALWAYS">
+
+            <padding>
+                <Insets top="10.0" right="15.0" bottom="10.0" left="15.0"/>
+            </padding>
+
             <children>
                 <FontIcon fx:id="curListingsBtn" iconColor="WHITE" iconLiteral="fas-warehouse" iconSize="25" onMouseClicked="#curListingsClick">
                     <Tooltip text="Current Listings" />
@@ -108,7 +113,7 @@
                     <Tooltip text="Items Bought" />
                 </FontIcon>
 
-                <FontIcon fx:id="soldBtn" iconColor="GREEN" iconLiteral="fas-hand-holding-usd" iconSize="25" onMouseClicked="#soldClick">
+                <FontIcon fx:id="soldBtn" iconColor="LIME" iconLiteral="fas-hand-holding-usd" iconSize="25" onMouseClicked="#soldClick">
                     <Tooltip text="Items Sold" />
                 </FontIcon>
 
@@ -118,6 +123,10 @@
 
 
 
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <FontIcon fx:id="newListingBtn" iconColor="GREEN" iconLiteral="fas-plus" iconSize="40" onMouseClicked="#listNew" wrappingWidth="39.0" />
 
                 <Region HBox.hgrow="ALWAYS"/>
 

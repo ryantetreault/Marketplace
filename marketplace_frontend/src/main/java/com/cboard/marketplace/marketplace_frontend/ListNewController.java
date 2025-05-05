@@ -10,10 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -21,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static com.cboard.marketplace.marketplace_frontend.Utility.StageUtility.STAGE_UTILITY;
+import static com.cboard.marketplace.marketplace_frontend.Utility.TooltipUtility.TOOLTIP_UTILITY;
 
 public class ListNewController {
     @FXML
@@ -40,23 +45,34 @@ public class ListNewController {
     private javafx.scene.control.Label errorLabel;
 
 
-    public void closeListNew(ActionEvent actionEvent) {
-        try {
+
+    public void closeListNew(ActionEvent event)
+    {
+        try
+        {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
             Parent root = loader.load();
 
             MainPageController controller = loader.getController();
-            controller.populate(actionEvent); // if needed
+            //controller.someFuncToPassDataToNextSceneHere();
 
-            Scene scene = ((Node) actionEvent.getSource()).getScene();
-            scene.setRoot(root);
-        } catch (IOException e) {
+            // populate product cards
+            controller.populate(event); // null because no ActionEvent here
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            STAGE_UTILITY.switchStage(stage);
+        }
+        catch(IOException e)
+        {
             e.printStackTrace();
         }
     }
 
     @FXML
     public void initialize() {
+
         loadSafeLocations();
         loadItemTypes();
 

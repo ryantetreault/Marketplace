@@ -72,29 +72,28 @@ public class userProfileController implements Initializable
     FontIcon soldBtn;
     @FXML
     FontIcon deleteBtn;
-
-    public void closeProfile(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        scene.setFill(Color.TRANSPARENT);
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-        MainPageController mainPageController = fxmlLoader.getController();
-        mainPageController.populate(actionEvent);
-        stage.setScene(scene);
-
-        stage.show();
-    }
-
-    public void listNew(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("listNew.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+    @FXML
+    FontIcon newListingBtn;
 
 
-        stage.setScene(scene);
+    public void listNew(MouseEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listNew.fxml"));
+            Parent root = loader.load();
 
-        stage.show();
+            ListNewController controller = loader.getController();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            STAGE_UTILITY.switchStage(stage);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -108,7 +107,8 @@ public class userProfileController implements Initializable
                 curListingsBtn, "Current Listings",
                 boughtBtn, "Items Bought",
                 soldBtn, "Items Sold",
-                deleteBtn, "Delete Account"
+                deleteBtn, "Delete Account",
+                newListingBtn, "List New"
 
         ));
         loadUserProfile();
