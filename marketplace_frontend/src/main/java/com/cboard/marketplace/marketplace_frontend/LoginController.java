@@ -191,12 +191,13 @@ public class LoginController implements Initializable {
         Parent root = loader.load();
 
         MainPageController controller = loader.getController();
-        controller.populate(event);
+        //controller.populate(event);
         //controller.someFuncToPassDataToNextSceneHere();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene newScene = new Scene(root);
         stage.setScene(newScene);
-        STAGE_UTILITY.switchStage(stage);
+        stage.show();
+        //STAGE_UTILITY.switchStage(stage);
     }
 }
