@@ -62,7 +62,7 @@ public class ListNewController {
             //controller.someFuncToPassDataToNextSceneHere();
 
             // populate product cards
-            controller.populate(event); // null because no ActionEvent here
+            //controller.populate(event); // null because no ActionEvent here
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);

@@ -48,7 +48,7 @@ public class ProductCardController {
 
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         MainPageController mainPageController = fxmlLoader.getController();
-        mainPageController.populate(actionEvent);
+        //mainPageController.populate(actionEvent);
         stage.setScene(scene);
 
         stage.show();
