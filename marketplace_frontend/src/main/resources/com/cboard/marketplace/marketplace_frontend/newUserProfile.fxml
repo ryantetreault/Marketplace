@@ -105,7 +105,7 @@
             </padding>
 
             <children>
-                <FontIcon fx:id="curListingsBtn" iconColor="WHITE" iconLiteral="fas-warehouse" iconSize="25" onMouseClicked="#curListingsClick">
+                <FontIcon fx:id="curListingsBtn" iconColor="#8B4513" iconLiteral="fas-warehouse" iconSize="25" onMouseClicked="#curListingsClick">
                     <Tooltip text="Current Listings" />
                 </FontIcon>
 

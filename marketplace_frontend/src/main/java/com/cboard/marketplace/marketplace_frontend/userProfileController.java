@@ -84,6 +84,7 @@ public class userProfileController implements Initializable
             Parent root = loader.load();
 
             ListNewController controller = loader.getController();
+            controller.setUserId(SessionManager.getUserIdFromToken());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
