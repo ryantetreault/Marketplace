@@ -53,6 +53,13 @@
     -fx-border-radius: 3;
     -fx-background-radius: 3;
 }
+.text-area{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+.text-area .content{
+    -fx-background-color: transparent;
+}
 
 /*.bg-scroll {
     -fx-background-image: url("src/main/resources/com/cboard/marketplace/marketplace_frontend/images/OwlSwapLogo-Transparent.png");

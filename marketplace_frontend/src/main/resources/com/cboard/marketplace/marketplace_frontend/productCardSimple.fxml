@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="293.0" prefWidth="175.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.MainPageController">
+<VBox fx:id="simpleCardVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="175.0" style="-fx-background-color: transparent; -fx-background-insets: 0; -fx-background-radius: 0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.ProductCardSimpleController">
    <children>
+      <TextField fx:id="titleTextField" alignment="CENTER" editable="false" prefWidth="168.0" style="-fx-background-color: transparent; -fx-background-insets: 0; -fx-background-radius: 0;" text="?????">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
       <ImageView fx:id="productImage" fitHeight="175.0" fitWidth="175.0" onMouseClicked="#openProductCard" pickOnBounds="true" preserveRatio="true">
          <Image url="@images/testPic.png" />
       </ImageView>
-      <TextArea fx:id="productTextArea" prefHeight="200.0" prefWidth="200.0" text="TEST" />
+      <TextArea fx:id="productTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" wrapText="true">
+         <styleClass>
+            <String fx:value="content" />
+            <String fx:value="text-area" />
+         </styleClass></TextArea>
    </children>
 </VBox>
