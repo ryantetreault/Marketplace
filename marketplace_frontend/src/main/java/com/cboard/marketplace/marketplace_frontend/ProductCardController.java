@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -31,7 +32,7 @@ public class ProductCardController {
     private Label nameLabel;
 
     @FXML
-    private Label descriptionLabel;
+    private TextArea descriptionLabel;
 
     @FXML
     private Label priceLabel;

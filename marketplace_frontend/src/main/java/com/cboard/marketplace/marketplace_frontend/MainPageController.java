@@ -1,6 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.CategoryUtility;
+import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.animation.PauseTransition;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -203,8 +205,10 @@ public class MainPageController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
+            newScene.setFill(Color.TRANSPARENT);
             stage.setScene(newScene);
-            stage.show();
+            StageUtility.switchStageTransparent(stage).show();
+            //stage.show();
         }
         catch(IOException e)
         {
@@ -251,6 +255,7 @@ public class MainPageController {
         controller.setUserId(SessionManager.getUserIdFromToken());
 
         Scene scene = ((Node) event.getSource()).getScene();
+
         scene.setRoot(root);
     }
 
