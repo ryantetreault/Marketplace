@@ -20,16 +20,35 @@
                   <ImageView fx:id="productImage" fitHeight="146.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </StackPane>
-            <VBox prefHeight="122.0" prefWidth="206.0" style="-fx-background-color: transparent;">
+            <VBox fx:id="fieldsBox" prefHeight="146.0" prefWidth="193.0" style="-fx-background-color: transparent;">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
                <children>
-                  <Label text="PRICE:" />
-                  <Label fx:id="priceLabel" text="-" />
-                  <Label text="LOCATION:" />
-                  <Label text="POSTER:" />
-                  <Label text="CATEGORY:" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="PRICE: " />
+                        <Label fx:id="priceLabel" text="-" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="LOCATION: " />
+                        <Label fx:id="locationLabel" text="-" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="POSTER: " />
+                        <Label fx:id="posterLabel" text="-" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="CATEGORY: " />
+                        <Label fx:id="categoryLabel" text="-" />
+                     </children>
+                  </HBox>
                </children>
                <padding>
                   <Insets top="10.0" />
@@ -63,7 +82,7 @@
             <Label fx:id="noLocationLabel" style="-fx-text-fill: #444; -fx-font-size: 14px;" text="No location selected." visible="false" />
          </children>
       </StackPane>
-      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="360.0" styleClass="blue-panel" stylesheets="@styles.css">
+      <HBox alignment="CENTER" minHeight="60.0" minWidth="360.0" prefHeight="65.0" prefWidth="360.0" styleClass="blue-panel" stylesheets="@styles.css">
          <children>
             <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="88.0" styleClass="blue-btn" text="Buy">
                <font>
