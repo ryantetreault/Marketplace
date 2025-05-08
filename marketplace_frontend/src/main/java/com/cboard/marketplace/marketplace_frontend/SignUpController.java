@@ -5,7 +5,9 @@ import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import com.cboard.marketplace.marketplace_common.dto.SignupRequest;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
+import com.cboard.marketplace.marketplace_frontend.Utility.WelcomePopupRenderer;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,7 +105,16 @@ public class SignUpController {
                 // auto log in user to get token
                 autoLogin(username, password);
 
-                switchToMain(event);
+                WelcomePopupRenderer renderer = new WelcomePopupRenderer("/com/cboard/marketplace/marketplace_frontend/welcomePopup.fxml");
+                renderer.show(event, () -> {
+                    try {
+                        switchToMain(event);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                //switchToMain(event);
                 /*// load mainPage.fxml
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
                 Parent root = fxmlLoader.load();
@@ -178,5 +189,10 @@ public class SignUpController {
         stage.setScene(newScene);
         StageUtility.switchStageDecorated(stage).show();
         //STAGE_UTILITY.switchStage(stage);
+    }
+    @FXML
+    private void closeProgram()
+    {
+        Platform.exit();
     }
 }

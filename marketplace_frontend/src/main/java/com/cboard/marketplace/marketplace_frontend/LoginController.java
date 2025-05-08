@@ -4,8 +4,10 @@ import com.cboard.marketplace.marketplace_common.dto.AuthResponse;
 import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
+import com.cboard.marketplace.marketplace_frontend.Utility.WelcomePopupRenderer;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -158,7 +160,18 @@ public class LoginController implements Initializable {
 
                 System.out.println("Login successful! Token: " + SessionManager.getToken());
 
-                switchToMain(event);
+                WelcomePopupRenderer renderer = new WelcomePopupRenderer("/com/cboard/marketplace/marketplace_frontend/welcomePopup.fxml");
+                renderer.show(event, () -> {
+                    try {
+                        switchToMain(event);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+
+
+                //switchToMain(event);
 
                 /*// load mainPage.fxml
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainPage.fxml"));
@@ -201,4 +214,5 @@ public class LoginController implements Initializable {
         StageUtility.switchStageDecorated(stage).show();
         //STAGE_UTILITY.switchStage(stage);
     }
+
 }

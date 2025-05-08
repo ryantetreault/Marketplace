@@ -157,7 +157,7 @@ public class MainPageController {
             Parent FXML = fxmlLoader.load();
             ProductCardSimpleController controller = fxmlLoader.getController();
             //Build text from item info
-            controller.buildText(itemDto);
+            controller.build(itemDto);
             this.gridPane.add(FXML, (Row), Column);
             //Use the numRow variable. Calculated base off the size of the stage and the size of the cards
             //If Row at max, start next
