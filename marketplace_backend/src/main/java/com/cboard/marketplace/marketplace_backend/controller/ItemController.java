@@ -1,14 +1,19 @@
 package com.cboard.marketplace.marketplace_backend.controller;
 
+import com.cboard.marketplace.marketplace_backend.model.*;
+import com.cboard.marketplace.marketplace_backend.service.CategoryService;
 import com.cboard.marketplace.marketplace_backend.service.ItemService;
 import com.cboard.marketplace.marketplace_common.*;
 
+import com.cboard.marketplace.marketplace_common.CategoryDto;
 import jakarta.validation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("item")
@@ -16,6 +21,9 @@ public class ItemController
 {
     @Autowired
     ItemService service;
+
+    @Autowired
+    private CategoryService categoryService;
 
     //returns all available items
     @GetMapping("all")
@@ -62,12 +70,6 @@ public class ItemController
 
 
     //soft deletes an item -- instead of actually deleting an item, turns its available attribute to false
-    @DeleteMapping("{id}/soft-delete")
-    public ResponseEntity<String> softDeleteItem(@PathVariable("id") int itemId)
-    {
-        return service.softDeleteItem(itemId);
-    }
-
     @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteItem(@PathVariable("id") int itemId)
     {
@@ -80,4 +82,8 @@ public class ItemController
         return ResponseEntity.ok(itemTypes);
     }
 
+    @GetMapping("/categories")
+    public List<CategoryDto> getAllCategories() {
+        return categoryService.getAll();
+    }
 }
