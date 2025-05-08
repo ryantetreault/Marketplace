@@ -1,5 +1,8 @@
 package com.cboard.marketplace.marketplace_frontend;
 
+import com.cboard.marketplace.marketplace_common.ProductDto;
+import com.cboard.marketplace.marketplace_common.RequestDto;
+import com.cboard.marketplace.marketplace_common.ServiceDto;
 import com.cboard.marketplace.marketplace_common.dto.LocationDto;
 import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
@@ -9,9 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.web.WebView;
 import okhttp3.Request;
@@ -31,7 +36,7 @@ public class ProductCardController {
     private Label nameLabel;
 
     @FXML
-    private Label descriptionLabel;
+    private TextArea descriptionLabel;
 
     @FXML
     private Label priceLabel;
@@ -41,6 +46,16 @@ public class ProductCardController {
 
     @FXML
     private Label noLocationLabel;
+
+    @FXML
+    private Label locationLabel;
+    @FXML
+    private  Label posterLabel;
+    @FXML
+    private Label categoryLabel;
+
+    @FXML
+    private VBox fieldsBox;
 
     public void closeProductCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
@@ -64,6 +79,53 @@ public class ProductCardController {
         // Set price
         priceLabel.setText(String.format("$%.2f", item.getPrice()));
 
+        locationLabel.setText(item.getLocation());
+        posterLabel.setText("TEMP");
+        categoryLabel.setText(item.getCategory());
+
+
+        Label newLable = new Label();
+        HBox hbox = new HBox();
+        if(item.getItemType().equalsIgnoreCase("request"))
+        {
+            newLable.setText("DEADLINE: ");
+            hbox.getChildren().add(newLable);
+            newLable = new Label();
+            RequestDto rdto = (RequestDto) item;
+            newLable.setText(rdto.getDeadline());
+            hbox.getChildren().add(newLable);
+            this.fieldsBox.getChildren().add(hbox);
+        }
+        else if(item.getItemType().equalsIgnoreCase("product"))
+        {
+            newLable.setText("BRAND: " + "\n");
+            hbox.getChildren().add(newLable);
+            newLable = new Label();
+            ProductDto rdto = (ProductDto) item;
+            newLable.setText(rdto.getBrand());
+            hbox.getChildren().add(newLable);
+            this.fieldsBox.getChildren().add(hbox);
+
+            hbox = new HBox();
+            newLable.setText("QUANTITY: ");
+            hbox.getChildren().add(newLable);
+            newLable = new Label();
+            newLable.setText(""+rdto.getQuantity());
+            hbox.getChildren().add(newLable);
+            this.fieldsBox.getChildren().add(hbox);
+
+        }
+        else if(item.getItemType().equalsIgnoreCase("service"))
+        {
+            newLable.setText("DURATION: ");
+            hbox.getChildren().add(newLable);
+            newLable = new Label();
+            ServiceDto rdto = (ServiceDto) item;
+            newLable.setText(""+rdto.getDurationMinutes());
+            hbox.getChildren().add(newLable);
+            this.fieldsBox.getChildren().add(hbox);
+
+        }
         // Load product image if present
         if (item.getImage_date() != null) {
             Image image = new Image(new ByteArrayInputStream(item.getImage_date()));
@@ -86,7 +148,7 @@ public class ProductCardController {
 
     private void loadMap(int locationId) {
         Request request = new Request.Builder()
-                .url("http://localhost:8080/api/locations/" + locationId)
+                .url("http://localhost:8080/" + locationId)
                 .get()
                 .build();
 

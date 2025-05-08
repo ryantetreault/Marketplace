@@ -3,6 +3,7 @@ package com.cboard.marketplace.marketplace_frontend;
 import com.cboard.marketplace.marketplace_common.dto.AuthResponse;
 import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
+import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -197,7 +198,7 @@ public class LoginController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene newScene = new Scene(root);
         stage.setScene(newScene);
-        stage.show();
+        StageUtility.switchStageDecorated(stage).show();
         //STAGE_UTILITY.switchStage(stage);
     }
 }
