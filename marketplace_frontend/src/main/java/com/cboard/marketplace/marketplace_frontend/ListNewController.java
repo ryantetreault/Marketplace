@@ -2,6 +2,7 @@ package com.cboard.marketplace.marketplace_frontend;
 
 import com.cboard.marketplace.marketplace_common.dto.LocationDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
+import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
 import com.google.gson.reflect.TypeToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,7 +68,8 @@ public class ListNewController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            STAGE_UTILITY.switchStage(stage);
+            StageUtility.switchStageDecorated(stage).show();
+            //STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {

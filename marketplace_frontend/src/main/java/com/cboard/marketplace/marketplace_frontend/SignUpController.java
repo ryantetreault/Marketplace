@@ -4,6 +4,7 @@ import com.cboard.marketplace.marketplace_common.dto.AuthResponse;
 import com.cboard.marketplace.marketplace_common.dto.LoginRequest;
 import com.cboard.marketplace.marketplace_common.dto.SignupRequest;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
+import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -175,6 +176,7 @@ public class SignUpController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene newScene = new Scene(root);
         stage.setScene(newScene);
-        STAGE_UTILITY.switchStage(stage);
+        StageUtility.switchStageDecorated(stage).show();
+        //STAGE_UTILITY.switchStage(stage);
     }
 }

@@ -1,6 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 
 import com.cboard.marketplace.marketplace_common.TransactionDto;
+import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
 import com.cboard.marketplace.marketplace_frontend.Utility.TransactionRenderer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.fxml.FXML;
@@ -131,7 +132,8 @@ public class TransactionPageController
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            STAGE_UTILITY.switchStage(stage);
+            StageUtility.switchStageDecorated(stage).show();
+            //STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {

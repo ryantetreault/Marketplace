@@ -5,6 +5,7 @@ import com.cboard.marketplace.marketplace_common.TransactionDto;
 import com.cboard.marketplace.marketplace_common.dto.UserDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import com.cboard.marketplace.marketplace_frontend.Utility.ItemRenderer;
+import com.cboard.marketplace.marketplace_frontend.Utility.StageUtility;
 import com.cboard.marketplace.marketplace_frontend.Utility.TransactionRenderer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.event.ActionEvent;
@@ -392,7 +393,8 @@ public class userProfileController implements Initializable
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene newScene = new Scene(root);
             stage.setScene(newScene);
-            STAGE_UTILITY.switchStage(stage);
+            StageUtility.switchStageDecorated(stage).show();
+            //STAGE_UTILITY.switchStage(stage);
         }
         catch(IOException e)
         {
