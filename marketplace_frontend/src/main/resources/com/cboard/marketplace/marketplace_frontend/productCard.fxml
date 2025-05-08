@@ -11,93 +11,123 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="360.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cboard.marketplace.marketplace_frontend.ProductCardController">
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cboard.marketplace.marketplace_frontend.ProductCardController"
+      prefHeight="546.0" prefWidth="360.0"
+      style="-fx-background-color: lightgray;">
+
    <children>
+
+      <!-- Product Title -->
+      <Label fx:id="nameLabel" text="NAME OF PRODUCT" alignment="CENTER"
+             style="-fx-font-weight: bold;">
+         <padding>
+            <Insets top="10.0" left="10.0" bottom="5.0"/>
+         </padding>
+         <font>
+            <Font size="25.0"/>
+         </font>
+      </Label>
+
+      <!-- Seller Header -->
+      <VBox style="-fx-background-color: #e0e0e0;">
+         <children>
+            <Label fx:id="sellerNameLabel" text="Seller Name"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label fx:id="sellerEmailLabel" text="Seller Email"
+                   style="-fx-font-size: 13px;"/>
+         </children>
+         <padding>
+            <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+         </padding>
+      </VBox>
+
+      <!-- Image + Fields -->
       <HBox prefHeight="167.0" prefWidth="360.0" style="-fx-background-color: transparent;">
          <children>
             <StackPane prefHeight="179.0" prefWidth="175.0" style="-fx-background-color: transparent;">
                <children>
-                  <ImageView fx:id="productImage" fitHeight="146.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="productImage" fitHeight="146.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true"/>
                </children>
             </StackPane>
             <VBox fx:id="fieldsBox" prefHeight="146.0" prefWidth="193.0" style="-fx-background-color: transparent;">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox>
                      <children>
-                        <Label text="PRICE: " />
-                        <Label fx:id="priceLabel" text="-" />
+                        <Label text="PRICE: "/>
+                        <Label fx:id="priceLabel" text="-"/>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox>
                      <children>
-                        <Label text="LOCATION: " />
-                        <Label fx:id="locationLabel" text="-" />
+                        <Label text="LOCATION: "/>
+                        <Label fx:id="locationLabel" text="-"/>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox>
                      <children>
-                        <Label text="POSTER: " />
-                        <Label fx:id="posterLabel" text="-" />
+                        <Label text="POSTER ID: "/>
+                        <Label fx:id="posterLabel" text="-"/>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox>
                      <children>
-                        <Label text="CATEGORY: " />
-                        <Label fx:id="categoryLabel" text="-" />
+                        <Label text="CATEGORY: "/>
+                        <Label fx:id="categoryLabel" text="-"/>
                      </children>
                   </HBox>
                </children>
                <padding>
-                  <Insets top="10.0" />
+                  <Insets top="10.0"/>
                </padding>
             </VBox>
          </children>
          <VBox.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="10.0"/>
          </VBox.margin>
       </HBox>
-      <Label fx:id="nameLabel" text="NAME OF PRODUCT">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="descriptionLabel" editable="false" prefHeight="120.0" prefWidth="360.0" style="-fx-background-color: white;" wrapText="true">
-         <padding>
-            <Insets left="10.0" />
-         </padding></TextArea>
 
-      <!-- Map + fallback message stacked -->
+      <!-- Description -->
+      <TextArea fx:id="descriptionLabel" editable="false" wrapText="true"
+                prefHeight="120.0" prefWidth="360.0"
+                style="-fx-background-color: white;">
+         <padding>
+            <Insets left="10.0"/>
+         </padding>
+      </TextArea>
+
+      <!-- Map View -->
       <StackPane prefHeight="300.0" prefWidth="360.0">
          <children>
-            <WebView fx:id="mapView" prefHeight="300.0" prefWidth="360.0" />
-            <Label fx:id="noLocationLabel" style="-fx-text-fill: #444; -fx-font-size: 14px;" text="No location selected." visible="false" />
+            <WebView fx:id="mapView" prefHeight="300.0" prefWidth="360.0"/>
+            <Label fx:id="noLocationLabel" text="No location selected." visible="false"
+                   style="-fx-text-fill: #444; -fx-font-size: 14px;"/>
          </children>
       </StackPane>
-      <HBox alignment="CENTER" minHeight="60.0" minWidth="360.0" prefHeight="65.0" prefWidth="360.0" styleClass="blue-panel" stylesheets="@styles.css">
+
+      <!-- Action Buttons -->
+      <HBox alignment="CENTER" minHeight="60.0" minWidth="360.0"
+            prefHeight="65.0" prefWidth="360.0"
+            styleClass="blue-panel" stylesheets="@styles.css">
          <children>
-            <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="88.0" styleClass="blue-btn" text="Buy">
+            <Button text="Buy" prefHeight="29.0" prefWidth="88.0"
+                    styleClass="blue-btn">
                <font>
-                  <Font size="14.0" />
+                  <Font size="14.0"/>
                </font>
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets right="10.0"/>
                </HBox.margin>
             </Button>
-            <Button fx:id="productCardCancelBtn" mnemonicParsing="false" onAction="#closeProductCard" prefHeight="29.0" prefWidth="88.0" styleClass="blue-btn" text="Cancel">
+            <Button fx:id="productCardCancelBtn" text="Cancel" onAction="#closeProductCard"
+                    prefHeight="29.0" prefWidth="88.0"
+                    styleClass="blue-btn">
                <font>
-                  <Font size="14.0" />
+                  <Font size="14.0"/>
                </font>
                <HBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0"/>
                </HBox.margin>
             </Button>
          </children>

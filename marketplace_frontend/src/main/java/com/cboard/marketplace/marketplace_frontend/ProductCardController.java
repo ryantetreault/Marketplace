@@ -1,10 +1,7 @@
 package com.cboard.marketplace.marketplace_frontend;
 
-import com.cboard.marketplace.marketplace_common.ProductDto;
-import com.cboard.marketplace.marketplace_common.RequestDto;
-import com.cboard.marketplace.marketplace_common.ServiceDto;
+import com.cboard.marketplace.marketplace_common.*;
 import com.cboard.marketplace.marketplace_common.dto.LocationDto;
-import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
 import com.google.gson.reflect.TypeToken;
 import javafx.event.ActionEvent;
@@ -53,9 +50,12 @@ public class ProductCardController {
     private  Label posterLabel;
     @FXML
     private Label categoryLabel;
-
     @FXML
     private VBox fieldsBox;
+    @FXML
+    private Label sellerNameLabel;
+    @FXML
+    private Label sellerEmailLabel;
 
     public void closeProductCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
@@ -70,6 +70,9 @@ public class ProductCardController {
     }
 
     public void initializeProduct(ItemDto item) {
+        // load the sellers id
+        loadSellerInfo(item.getUserId());
+
         // Set product name
         nameLabel.setText(item.getName());
 
@@ -172,6 +175,28 @@ public class ProductCardController {
         } catch (IOException e) {
             e.printStackTrace();
             mapView.setVisible(false);
+        }
+    }
+
+    private void loadSellerInfo(int sellerId) {
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/user/" + sellerId)
+                .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                UserDto user = HttpUtility.HTTP_UTILITY.getGson().fromJson(response.body().string(), UserDto.class);
+                sellerNameLabel.setText(user.getFirstName() + " " + user.getLastName());
+                sellerEmailLabel.setText(user.getEmail());
+            } else {
+                sellerNameLabel.setText("Seller info unavailable");
+                sellerEmailLabel.setText("");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            posterLabel.setText("Seller info unavailable");
         }
     }
 }
