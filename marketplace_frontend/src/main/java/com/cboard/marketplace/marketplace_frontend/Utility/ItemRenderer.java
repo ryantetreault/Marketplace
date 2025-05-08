@@ -1,15 +1,15 @@
 package com.cboard.marketplace.marketplace_frontend.Utility;
 
+import com.cboard.marketplace.marketplace_common.CategoryDto;
 import com.cboard.marketplace.marketplace_common.ItemDto;
+import com.cboard.marketplace.marketplace_common.dto.LocationDto;
 import com.cboard.marketplace.marketplace_frontend.SessionManager;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gson.reflect.TypeToken;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,6 +18,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,10 +98,19 @@ public class ItemRenderer {
         TextField nameField = new TextField(item.getName());
         nameField.setStyle("-fx-background-color: white; -fx-text-fill: black;");
         TextField priceField = new TextField(String.valueOf(item.getPrice()));
-        TextField categoryField = new TextField(item.getCategory());
+
+        ComboBox<String> categoryField = new ComboBox<>();
+        categoryField.setValue(item.getCategory());
+        for(CategoryDto cat : getCategories())
+            categoryField.getItems().add(cat.getName());
+
         TextField descriptionField = new TextField(item.getDescription());
         TextField releaseDateField = new TextField(item.getReleaseDate());
-        TextField locationField = new TextField(item.getLocation());
+
+        ComboBox<String> locationField = new ComboBox<>();
+        locationField.setValue(item.getLocation());
+        for(LocationDto loc : getLocations())
+            locationField.getItems().add(loc.getName());
 
         editView.getChildren().addAll(
                 new Label("Name:"), nameField,
@@ -146,10 +157,10 @@ public class ItemRenderer {
 
             item.setName(nameField.getText());
             item.setPrice(Double.parseDouble(priceField.getText()));
-            item.setCategory(categoryField.getText());
+            item.setCategory(categoryField.getValue());
             item.setDescription(descriptionField.getText());
             item.setReleaseDate(releaseDateField.getText());
-            item.setLocation(locationField.getText());
+            item.setLocation(locationField.getValue());
 
             Map<String, String> updatedSpecifics = new HashMap<>();
             for (Map.Entry<String, TextField> entry : dynamicFieldInputs.entrySet()) {
@@ -331,5 +342,57 @@ public class ItemRenderer {
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.play();
+    }
+
+    public static List<LocationDto> getLocations()
+    {
+
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/api/locations")
+                .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                String json = response.body().string();
+
+                Type listType = new TypeToken<List<LocationDto>>() {}.getType();
+                return HttpUtility.HTTP_UTILITY.getGson().fromJson(json, listType);
+
+            } else {
+                System.out.println("Failed to load locations. Status code: " + response.code());
+                System.out.println("Body: " + response.body().string());
+                System.out.println("Failed to load locations.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public static List<CategoryDto> getCategories()
+    {
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/item/categories")
+                .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .build();
+
+        try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                String json = response.body().string();
+
+                Type listType = new TypeToken<List<CategoryDto>>() {}.getType();
+                return HttpUtility.HTTP_UTILITY.getGson().fromJson(json, listType);
+
+
+            } else {
+                System.out.println("Failed to load categories: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

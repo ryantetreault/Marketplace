@@ -79,10 +79,10 @@
             </padding>
 
             <children>
-                <FontIcon  visible="false" iconColor="PURPLE" iconLiteral="fas-question" iconSize="40"  wrappingWidth="39.0" />
-                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40"  wrappingWidth="39.0" />
-                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-user" iconSize="40"  wrappingWidth="39.0" />
-                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="40"  wrappingWidth="39.0" />
+                <FontIcon  visible="false" iconColor="PURPLE" iconLiteral="fas-question" iconSize="25"  wrappingWidth="39.0" />
+                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="25"  wrappingWidth="39.0" />
+                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-user" iconSize="25"  wrappingWidth="39.0" />
+                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="25"  wrappingWidth="39.0" />
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <FontIcon fx:id="newListingBtn" iconColor="GREEN" iconLiteral="fas-plus" iconSize="40" onMouseClicked="#listNew" wrappingWidth="39.0" />
