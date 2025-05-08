@@ -149,6 +149,28 @@ public class TransactionPageController
         stage.show();
     }
 
+    @FXML
+    public void listNew(MouseEvent event)
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("listNew.fxml"));
+            Parent root = loader.load();
+
+            ListNewController controller = loader.getController();
+            controller.setUserId(SessionManager.getUserIdFromToken());
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene newScene = new Scene(root);
+            stage.setScene(newScene);
+            STAGE_UTILITY.switchStage(stage);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
