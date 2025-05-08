@@ -16,6 +16,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
 <VBox maxHeight="-Infinity"
       maxWidth="-Infinity"
       minHeight="-Infinity"
@@ -77,6 +79,15 @@
             </padding>
 
             <children>
+                <FontIcon  visible="false" iconColor="PURPLE" iconLiteral="fas-question" iconSize="40"  wrappingWidth="39.0" />
+                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40"  wrappingWidth="39.0" />
+                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-user" iconSize="40"  wrappingWidth="39.0" />
+                <FontIcon visible="false" iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="40"  wrappingWidth="39.0" />
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <FontIcon fx:id="newListingBtn" iconColor="GREEN" iconLiteral="fas-plus" iconSize="40" onMouseClicked="#listNew" wrappingWidth="39.0" />
+
+                <Region HBox.hgrow="ALWAYS"/>
 
                 <FontIcon fx:id="helpBtn" iconColor="PURPLE" iconLiteral="fas-question" iconSize="40" onMouseClicked="#openHelpPopup">
                     <Tooltip text="Help" />
