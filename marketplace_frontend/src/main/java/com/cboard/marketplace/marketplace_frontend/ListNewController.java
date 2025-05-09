@@ -13,13 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -173,19 +175,22 @@ public class ListNewController {
     }
 
     @FXML
-    public void createListing(ActionEvent event) {
+    public void createListing(ActionEvent event)
+    {
+
         errorLabel.setText("");
 
         String selectedType = itemTypeComboBox.getValue();
         String categoryName = categoryComboBox.getValue();
         String locationName = locationDropdown.getValue();
 
-        selectedType =  selectedType.toLowerCase();
 
         if (selectedType == null || locationName == null) {
             errorLabel.setText("Please select an item type and a location.");
             return;
         }
+
+        selectedType =  selectedType.toLowerCase();
 
         int locationId = locationMap.get(locationName);
         int userId = this.userId;
@@ -198,9 +203,6 @@ public class ListNewController {
 
         String releaseDate = java.time.LocalDate.now().toString();
         boolean available = true;
-        String imageName = "placeholder.jpg";
-        String imageType = "image/jpeg";
-        byte[] imageData = new byte[0];
 
         var nameField = (javafx.scene.control.TextField) dynamicFormContainer.lookup("#nameField");
         var descriptionField = (javafx.scene.control.TextField) dynamicFormContainer.lookup("#descriptionField");
@@ -219,6 +221,21 @@ public class ListNewController {
             price = Double.parseDouble(priceField.getText());
         } catch (NumberFormatException e) {
             errorLabel.setText("Price must be a valid number.");
+            return;
+        }
+
+        String imageName = "placeholder.jpg";
+        String imageType = "image/jpeg";
+        byte[] imageData = new byte[0];
+
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select an image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File imageFile = fileChooser.showOpenDialog(errorLabel.getScene().getWindow());
+
+        if (imageFile == null) {
+            errorLabel.setText("Please select an image.");
             return;
         }
 
@@ -251,7 +268,18 @@ public class ListNewController {
                         return;
                     }
 
-                    int duration = Integer.parseInt(durationField.getText());
+                    int duration;
+
+                    try{
+                        duration = Integer.parseInt(durationField.getText());
+
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        errorLabel.setText("Duration input is invalid.");
+                        return;
+                    }
+
 
                     dto = new com.cboard.marketplace.marketplace_common.ServiceDto(
                             0, name, description, price, userId, category, releaseDate, available,
@@ -281,11 +309,20 @@ public class ListNewController {
 
             // send the DTO to the backend
             String json = HttpUtility.HTTP_UTILITY.getGson().toJson(dto);
-            okhttp3.RequestBody body = okhttp3.RequestBody.create(json, HttpUtility.HTTP_UTILITY.getJSON());
+            //okhttp3.RequestBody body = okhttp3.RequestBody.create(json, HttpUtility.HTTP_UTILITY.getJSON());
+
+            RequestBody jsonBody = RequestBody.create(json, MediaType.parse("application/json"));
+            RequestBody fileBody = RequestBody.create(imageFile, MediaType.parse("image/*"));
+
+            MultipartBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("item", null, jsonBody)
+                    .addFormDataPart("image", imageFile.getName(), fileBody)
+                    .build();
 
             Request request = new Request.Builder()
-                    .url("http://localhost:8080/item/add")
-                    .post(body)
+                    .url("http://localhost:8080/item/add/with-image")
+                    .post(requestBody)
                     .addHeader("Authorization", "Bearer " + SessionManager.getToken())
                     .build();
 
@@ -304,6 +341,8 @@ public class ListNewController {
             errorLabel.setText("Something went wrong. Check your input.");
             e.printStackTrace();
         }
+
+
     }
 
     private void loadCategories() {

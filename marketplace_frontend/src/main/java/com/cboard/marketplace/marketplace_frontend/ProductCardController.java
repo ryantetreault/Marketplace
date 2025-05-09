@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 
 public class ProductCardController {
@@ -127,10 +128,17 @@ public class ProductCardController {
 
         }
         // Load product image if present
-        if (item.getImage_date() != null) {
-            Image image = new Image(new ByteArrayInputStream(item.getImage_date()));
+        if (item.getImage_date() != null)
+        {
+            System.out.println("image not null");
+            InputStream is = new ByteArrayInputStream(item.getImage_date());
+            Image image = new Image(is);
+            if(image.isError())
+                System.out.println("Image load error: " + image.getException());
+            //Image image = new Image(new ByteArrayInputStream(item.getImage_date()));
             productImage.setImage(image);
         } else {
+            System.out.println("image null");
             // Optional fallback image or visibility toggle
             productImage.setImage(null);
         }

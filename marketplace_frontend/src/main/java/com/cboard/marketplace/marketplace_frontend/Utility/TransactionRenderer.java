@@ -4,14 +4,19 @@ import com.cboard.marketplace.marketplace_common.ItemDto;
 import com.cboard.marketplace.marketplace_common.TransactionDto;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +27,38 @@ public class TransactionRenderer {
     public static VBox createTransactionCard(TransactionDto transaction, Consumer<TransactionDto> onClick) {
         VBox card = new VBox(5);
         card.setPadding(new Insets(10));
-        card.setStyle("-fx-background-color: #f0f0f0; -fx-border-radius: 8px; -fx-background-radius: 8px;");
-        card.setPrefWidth(900);
+        card.setStyle("-fx-background-color: #d0f0ff; -fx-border-radius: 8px; -fx-background-radius: 8px;");
+        card.setPrefWidth(1060);
+
+        HBox contentBox = new HBox(10);
+        contentBox.setAlignment(Pos.CENTER_LEFT);
+
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(80);
+        imageView.setPreserveRatio(true);
+
+        if (transaction.getItem().getImage_date() != null && transaction.getItem().getImage_date().length > 0) {
+            Image image = new Image(new ByteArrayInputStream(transaction.getItem().getImage_date()));
+            imageView.setImage(image);
+        }
+        else
+        {
+            imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+        }
+
+        VBox textBox = new VBox(5);
 
         Label itemName = new Label(transaction.getItem().getName());
-        Label price = new Label("Price: $" + transaction.getItem().getPrice());
+        itemName.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        Label price = new Label("Price: $" + String.format("%.2f", transaction.getItem().getPrice()) );
         Label category = new Label("Category: " + transaction.getItem().getCategory());
+        textBox.getChildren().addAll(itemName, price, category);
 
-        card.getChildren().addAll(itemName, price, category);
+        contentBox.getChildren().addAll(imageView, textBox);
+
+        card.getChildren().addAll(contentBox);
 
         card.setOnMouseClicked((MouseEvent e) -> onClick.accept(transaction));
 
@@ -40,10 +69,23 @@ public class TransactionRenderer {
         VBox detailView = new VBox(10);
         detailView.setPadding(new Insets(10));
         detailView.setStyle("-fx-background-color: #d0f0ff; -fx-border-color: darkblue; -fx-border-radius: 8px; -fx-background-radius: 8px;");
-        detailView.setPrefWidth(900);
+        detailView.setPrefWidth(1060);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
+        imageView.setPreserveRatio(true);
+
+        if (transaction.getItem().getImage_date() != null && transaction.getItem().getImage_date().length > 0) {
+            imageView.setImage(new Image(new ByteArrayInputStream(transaction.getItem().getImage_date())));
+        } else
+        {
+            imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+        }
 
         Label itemName = new Label("Item: " + transaction.getItem().getName());
-        Label price = new Label("Price: $" + transaction.getItem().getPrice());
+        itemName.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        Label price = new Label("Price: $" + String.format("%.2f", transaction.getItem().getPrice()));
         Label category = new Label("Category: " + transaction.getItem().getCategory());
         Label description = new Label("Description: " + transaction.getItem().getDescription());
         Label releaseDate = new Label("Release Date: " + transaction.getItem().getReleaseDate());
@@ -51,7 +93,7 @@ public class TransactionRenderer {
         Label buyerUsername = new Label("Buyer: " + transaction.getBuyer().getUsername());
         Label sellerUsername = new Label("Seller: " + transaction.getSeller().getUsername());
 
-        detailView.getChildren().addAll(itemName, price, category, description, releaseDate, location, buyerUsername, sellerUsername);
+        detailView.getChildren().addAll(imageView, itemName, price, category, description, releaseDate, location, buyerUsername, sellerUsername);
 
         ItemDto item = transaction.getItem();
         Map<String, String> specificFields = item.getSpecificFields();
@@ -60,13 +102,22 @@ public class TransactionRenderer {
             detailView.getChildren().add(label);
         }
 
+        HBox buttons = new HBox(10);
+        buttons.setAlignment(Pos.CENTER);
         Button backButton = new Button("Back");
+        backButton.setStyle(
+                "-fx-background-color: black; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white;"
+        );
+        buttons.getChildren().add(backButton);
+
         backButton.setOnAction(e -> {
             targetContainer.getChildren().setAll(parentList.getChildren());
             onBack.run();
         });
 
-        detailView.getChildren().add(backButton);
+        detailView.getChildren().add(buttons);
 
         targetContainer.getChildren().setAll(detailView);
     }

@@ -120,6 +120,7 @@ public class userProfileController implements Initializable
         objContainer.setContent(objListVBox);
 
         nameLabel.setText(user.getFirstName() + " " + user.getLastName());
+        nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
         emailLabel.setText("Email: " + user.getEmail());
         usernameLabel.setText("Username: " + user.getUsername());
         System.out.println(user.getAverageRating());
