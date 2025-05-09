@@ -31,6 +31,7 @@ public enum StageUtility
     {
         oldStage.hide();
         Stage newStage = new Stage(StageStyle.DECORATED);
+        newStage.setTitle("OwlSwap");
         newStage.setScene(oldStage.getScene());
         return newStage;
     }

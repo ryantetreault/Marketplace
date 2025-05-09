@@ -3,7 +3,6 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -15,9 +14,7 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <ImageView fx:id="productImage" fitHeight="175.0" fitWidth="175.0" onMouseClicked="#openProductCard" pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/testPic.png" />
-      </ImageView>
+      <ImageView fx:id="productImage" fitHeight="175.0" fitWidth="175.0" onMouseClicked="#openProductCard" pickOnBounds="true" preserveRatio="true" />
       <TextArea fx:id="productTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" stylesheets="@styles.css" wrapText="true">
          <styleClass>
             <String fx:value="content" />
