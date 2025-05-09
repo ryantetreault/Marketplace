@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.web.WebView;
 import okhttp3.Request;
@@ -294,7 +295,7 @@ public class ProductCardController {
                 if (response.isSuccessful()) {
                     javafx.application.Platform.runLater(() -> {
                         Stage currentStage = (Stage) buyButton.getScene().getWindow();
-                        currentStage.close();
+                        //currentStage.close();
                         openRatingPopup();
                     });
                 }
@@ -312,9 +313,16 @@ public class ProductCardController {
             System.out.println("Opening rating popup for seller ID: " + currentItem.getUserId());
 
             Stage popupStage = new Stage();
-            popupStage.setScene(new Scene(root));
             popupStage.setTitle("Rate Seller");
-            popupStage.show();
+
+            popupStage.initModality(Modality.APPLICATION_MODAL); // This makes it a modal popup
+            popupStage.initOwner((Stage) buyButton.getScene().getWindow()); // sets the main window as owner
+            popupStage.setScene(new Scene(root));
+
+            controller.disableWindowClose(popupStage);
+
+            popupStage.showAndWait(); // Waits for it to be closed before continuing
+
         } catch (IOException e) {
             e.printStackTrace();
         }
