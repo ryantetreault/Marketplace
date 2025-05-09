@@ -151,18 +151,16 @@ public class MainPageController {
         int Row = 1;
         int Column = 1;
         //For each item make a new card and add it to the next spot
-        for (ItemDto itemDto : this.items)
-        {
+        for (ItemDto itemDto : this.items) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("productCardSimple.fxml"));
             Parent FXML = fxmlLoader.load();
             ProductCardSimpleController controller = fxmlLoader.getController();
             //Build text from item info
-            controller.buildText(itemDto);
+            controller.build(itemDto);
             this.gridPane.add(FXML, (Row), Column);
             //Use the numRow variable. Calculated base off the size of the stage and the size of the cards
             //If Row at max, start next
-            if(((Row) == this.numRow))
-            {
+            if (((Row) == this.numRow)) {
                 Column++;
                 Row = 0;
             }
@@ -170,17 +168,6 @@ public class MainPageController {
         }
         //Margins
         setGridViewBuffer(gridPane, new Insets(10));
-    }
-    //OUTDATED
-    public void profileClicked(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("userProfile.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-
-        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        userProfileController userProfileController = fxmlLoader.getController();
-        stage.setScene(scene);
-
-        STAGE_UTILITY.switchStage(stage);
     }
 
     public void newProfileClicked(MouseEvent event) throws IOException

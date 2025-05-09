@@ -64,10 +64,10 @@
 
          <children>
 
-            <FontIcon iconColor="PURPLE" iconLiteral="fas-question" iconSize="40" onMouseClicked="#openHelpPopup" visible="false" wrappingWidth="39.0" />
-            <FontIcon iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="40" onMouseClicked="#transactionsClicked" visible="false" wrappingWidth="39.0" />
-            <FontIcon iconColor="WHITE" iconLiteral="fas-user" iconSize="40" onMouseClicked="#newProfileClicked" visible="false" wrappingWidth="39.0" />
-            <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="40" onMouseClicked="#handleBack" visible="false" wrappingWidth="39.0" />
+            <FontIcon iconColor="PURPLE" iconLiteral="fas-question" iconSize="25" onMouseClicked="#openHelpPopup" visible="false" wrappingWidth="39.0" />
+            <FontIcon iconColor="WHITE" iconLiteral="fas-cash-register" iconSize="25" onMouseClicked="#transactionsClicked" visible="false" wrappingWidth="39.0" />
+            <FontIcon iconColor="WHITE" iconLiteral="fas-user" iconSize="25" onMouseClicked="#newProfileClicked" visible="false" wrappingWidth="39.0" />
+            <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" iconSize="25" onMouseClicked="#handleBack" visible="false" wrappingWidth="39.0" />
             <Region HBox.hgrow="ALWAYS" />
 
             <FontIcon fx:id="newListingBtn" iconColor="GREEN" iconLiteral="fas-plus" iconSize="40" onMouseClicked="#handleNewListing" wrappingWidth="39.0" />

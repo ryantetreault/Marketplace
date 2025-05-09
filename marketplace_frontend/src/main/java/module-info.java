@@ -9,7 +9,8 @@ module com.cboard.marketplace.marketplace_frontend {
     requires org.kordamp.ikonli.fontawesome5;
     requires com.google.gson;
     requires okhttp3;
-    requires javafx.web; // Force Ikonli to load FontAwesome Solid icons
+    requires javafx.web;
+    requires java.desktop; // Force Ikonli to load FontAwesome Solid icons
 
     opens com.cboard.marketplace.marketplace_frontend to javafx.fxml;
     opens com.cboard.marketplace.marketplace_frontend.Request to com.google.gson;
