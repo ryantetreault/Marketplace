@@ -21,7 +21,5 @@
     <HBox spacing="10" alignment="CENTER">
         <Button text="Submit" onAction="#submitRating"
                 style="-fx-background-color: #227cd7; -fx-text-fill: white; -fx-background-radius: 8px; -fx-font-size: 14px;"/>
-        <Button text="Cancel" onAction="#closePopup"
-                style="-fx-background-color: lightgray; -fx-text-fill: black; -fx-background-radius: 8px; -fx-font-size: 14px;"/>
     </HBox>
 </VBox>

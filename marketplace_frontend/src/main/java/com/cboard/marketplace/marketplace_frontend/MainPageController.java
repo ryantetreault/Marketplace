@@ -262,7 +262,14 @@ public class MainPageController {
             if(response.isSuccessful() && response.body() != null)
             {
                 String responseBody = response.body().string();
-                this.masterItemsList = HTTP_UTILITY.getObjMapper().readValue(responseBody, new TypeReference<List<ItemDto>>() {} ) ;
+
+                int userId = SessionManager.getUserIdFromToken();
+                List<ItemDto> fetchedItems = HTTP_UTILITY.getObjMapper().readValue(responseBody, new TypeReference<List<ItemDto>>() {} ) ;
+                for(ItemDto item : fetchedItems)
+                {
+                    if(item.getUserId() != userId)
+                        masterItemsList.add(item);
+                }
             }
             else
             {

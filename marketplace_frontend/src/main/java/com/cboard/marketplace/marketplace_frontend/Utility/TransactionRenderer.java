@@ -89,7 +89,7 @@ public class TransactionRenderer {
         {
             try
             {
-                imageView.setImage(new Image("file:/Users/cboard/Destop/image.jpeg"));
+                imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
             }
             catch(Exception e)
             {
