@@ -108,7 +108,7 @@
             prefHeight="65.0" prefWidth="360.0"
             styleClass="blue-panel" stylesheets="@styles.css">
          <children>
-            <Button text="Buy" prefHeight="29.0" prefWidth="88.0"
+            <Button fx:id="buyButton" text="Buy" onAction="#handleBuy" prefHeight="29.0" prefWidth="88.0"
                     styleClass="blue-btn">
                <font>
                   <Font size="14.0"/>

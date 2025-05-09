@@ -10,7 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,6 +28,9 @@ import javafx.scene.control.Label;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Base64;
+
+import static com.cboard.marketplace.marketplace_frontend.SessionManager.getToken;
 
 public class ProductCardController {
     @FXML
@@ -59,6 +64,13 @@ public class ProductCardController {
     @FXML
     private Label sellerEmailLabel;
 
+    private ItemDto currentItem;
+
+    @FXML
+    private Button buyButton;
+
+    private int sellerId;
+
     public void closeProductCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -72,6 +84,8 @@ public class ProductCardController {
     }
 
     public void initializeProduct(ItemDto item) {
+        this.currentItem = item;
+
         // load the sellers id
         loadSellerInfo(item.getUserId());
 
@@ -156,7 +170,7 @@ public class ProductCardController {
         Request request = new Request.Builder()
                 .url("http://localhost:8080/api/locations/" + locationId)
                 .get()
-                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .addHeader("Authorization", "Bearer " + getToken())
                 .build();
 
         try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
@@ -215,7 +229,7 @@ public class ProductCardController {
         Request request = new Request.Builder()
                 .url("http://localhost:8080/user/" + sellerId)
                 .get()
-                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                .addHeader("Authorization", "Bearer " + getToken())
                 .build();
 
         try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
@@ -223,6 +237,7 @@ public class ProductCardController {
                 UserDto user = HttpUtility.HTTP_UTILITY.getGson().fromJson(response.body().string(), UserDto.class);
                 sellerNameLabel.setText(user.getFirstName() + " " + user.getLastName());
                 sellerEmailLabel.setText(user.getEmail());
+                this.sellerId = user.getUserId();
             } else {
                 sellerNameLabel.setText("Seller info unavailable");
                 sellerEmailLabel.setText("");
@@ -230,6 +245,60 @@ public class ProductCardController {
         } catch (IOException e) {
             e.printStackTrace();
             posterLabel.setText("Seller info unavailable");
+        }
+    }
+
+    @FXML
+    private void handleBuy(ActionEvent event) {
+        if (currentItem == null)
+            return;
+
+        int itemId = currentItem.getItemId();
+        int buyerId = SessionManager.getUserIdFromToken();
+
+        Request request = new Request.Builder()
+                .url("http://localhost:8080/transaction/purchase/" + itemId + "/" + buyerId)
+                .post(okhttp3.RequestBody.create(new byte[0]))
+                .addHeader("Authorization", "Bearer " + getToken())
+                .build();
+
+        HttpUtility.HTTP_UTILITY.getClient().newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                String result = response.body().string();
+                System.out.println("Purchase Response: " + result);
+
+                if (response.isSuccessful()) {
+                    javafx.application.Platform.runLater(() -> {
+                        Stage currentStage = (Stage) buyButton.getScene().getWindow();
+                        currentStage.close();
+                        openRatingPopup();
+                    });
+                }
+            }
+        });
+    }
+
+    private void openRatingPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ratingPopup.fxml"));
+            Parent root = loader.load();
+
+            RatingPopupController controller = loader.getController();
+            controller.setSellerId(sellerId);
+            System.out.println("Opening rating popup for seller ID: " + currentItem.getUserId());
+
+            Stage popupStage = new Stage();
+            popupStage.setScene(new Scene(root));
+            popupStage.setTitle("Rate Seller");
+            popupStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
