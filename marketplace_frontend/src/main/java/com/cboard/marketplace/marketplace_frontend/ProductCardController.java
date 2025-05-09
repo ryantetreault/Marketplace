@@ -294,9 +294,9 @@ public class ProductCardController {
 
                 if (response.isSuccessful()) {
                     javafx.application.Platform.runLater(() -> {
-                        Stage currentStage = (Stage) buyButton.getScene().getWindow();
-                        //currentStage.close();
                         openRatingPopup();
+                        Stage currentStage = (Stage) buyButton.getScene().getWindow();
+                        currentStage.close();
                     });
                 }
             }
@@ -321,7 +321,7 @@ public class ProductCardController {
 
             controller.disableWindowClose(popupStage);
 
-            popupStage.showAndWait(); // Waits for it to be closed before continuing
+            popupStage.showAndWait(); // waits for it to be closed before continuing
 
         } catch (IOException e) {
             e.printStackTrace();
