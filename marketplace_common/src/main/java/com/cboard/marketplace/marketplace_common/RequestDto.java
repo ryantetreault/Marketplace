@@ -10,8 +10,6 @@ public class RequestDto extends ItemDto
     @NotNull(message = "Deadline is required...")
     private String deadline;
 
-    private Integer locationId;
-
     public RequestDto() {
     }
 
@@ -46,15 +44,5 @@ public class RequestDto extends ItemDto
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
-    }
-
-    @Override
-    public Integer getLocationId() {
-        return locationId;
-    }
-
-    @Override
-    public void setLocationId(Integer locationId) {
-        this.locationId = locationId;
     }
 }

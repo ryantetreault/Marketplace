@@ -72,6 +72,9 @@ public class ProductCardController {
 
     private int sellerId;
 
+    @FXML
+    private Label sellerRatingLabel;
+
     public void closeProductCard(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SignUpController.class.getResource("mainPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -246,6 +249,13 @@ public class ProductCardController {
                 sellerNameLabel.setText(user.getFirstName() + " " + user.getLastName());
                 sellerEmailLabel.setText(user.getEmail());
                 this.sellerId = user.getUserId();
+
+                Double rating = user.getAverageRating();
+                if (rating != null) {
+                    sellerRatingLabel.setText(String.format("Rating: %.1f", rating));
+                } else {
+                    sellerRatingLabel.setText("Rating: N/A");
+                }
             } else {
                 sellerNameLabel.setText("Seller info unavailable");
                 sellerEmailLabel.setText("");
