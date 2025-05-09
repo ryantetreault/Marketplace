@@ -16,12 +16,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import okhttp3.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -111,17 +111,28 @@ public class ItemRenderer {
         }
 
         Button backButton = new Button("Back");
+        backButton.setStyle(
+                "-fx-background-color: black; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white;"
+        );
         backButton.setOnAction(e -> {
             targetContainer.getChildren().setAll(parentList.getChildren());
             onBack.run();
         });
 
         Button editButton = new Button("Edit");
+        editButton.setStyle(
+                "-fx-background-color: orange; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: red;"
+        );
         editButton.setOnAction(e -> {
             ItemRenderer.showEditItemView(targetContainer, parentList, item, onBack);
         });
 
         HBox buttons = new HBox(10);
+        buttons.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(backButton, editButton);
 
         detailView.getChildren().addAll(buttons);
@@ -194,6 +205,11 @@ public class ItemRenderer {
 
 
         Button backButton = new Button("Cancel");
+        backButton.setStyle(
+                "-fx-background-color: black; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white;"
+        );
         backButton.setOnAction(e -> {
             targetContainer.getChildren().setAll(parentList.getChildren());
             onBack.run();
@@ -203,7 +219,7 @@ public class ItemRenderer {
         deleteButton.setStyle(
                 "-fx-background-color: #8B0000; " +
                         "-fx-font-weight: bold; " +
-                        "-fx-text-fill: white;"
+                        "-fx-text-fill: orange;"
         );
         deleteButton.setOnAction(e -> {
 
@@ -246,9 +262,38 @@ public class ItemRenderer {
             }
         });
 
+        Button saveButtonWithImage = new Button("Save Changes and Add New Image");
+        saveButtonWithImage.setStyle(
+                "-fx-background-color: white; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: green;"
+        );
+        saveButtonWithImage.setOnAction(e -> {
+
+            item.setName(nameField.getText());
+            item.setPrice(Double.parseDouble(priceField.getText()));
+            item.setCategory(categoryField.getValue());
+            item.setDescription(descriptionField.getText());
+            item.setReleaseDate(releaseDateField.getText());
+            item.setLocation(locationField.getValue());
+
+            Map<String, String> updatedSpecifics = new HashMap<>();
+            for (Map.Entry<String, TextField> entry : dynamicFieldInputs.entrySet()) {
+                updatedSpecifics.put(entry.getKey(), entry.getValue().getText());
+            }
+            item.setSpecificFields(updatedSpecifics);
+
+
+            if(ItemRenderer.saveItemWithImage(targetContainer ,item))
+            {
+                List<ItemDto> updatedItems = getItemsForUser();
+                displayItems(targetContainer, new ScrollPane(), updatedItems, updatedItems);
+            }
+        });
+
         HBox buttons = new HBox(10);
         buttons.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(saveButton, deleteButton, backButton);
+        buttons.getChildren().addAll(saveButton, saveButtonWithImage, deleteButton, backButton);
 
         editView.getChildren().add(buttons);
         targetContainer.getChildren().setAll(editView);
@@ -265,6 +310,59 @@ public class ItemRenderer {
             Request request = new Request.Builder()
                     .url("http://localhost:8080/item/update")
                     .put(body)
+                    .addHeader("Authorization", "Bearer " + SessionManager.getToken())
+                    .build();
+
+            Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute();
+            if (response.isSuccessful())
+            {
+                // reload parent list or show success
+                return true;
+            }
+            else
+            {
+                AlertUtility.ALERT_UTILITY.showAlert("Update Failed", "Error updating item.");
+            }
+
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            AlertUtility.ALERT_UTILITY.showAlert("Exception", "Something went wrong.");
+        }
+        return false;
+
+    }
+
+    public static boolean saveItemWithImage(VBox targetContainer, ItemDto item)
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select an image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File imageFile = fileChooser.showOpenDialog(targetContainer.getScene().getWindow());
+
+        if (imageFile == null) {
+            ALERT_UTILITY.showAlert("ERROR", "No image selected...");
+            return false;
+        }
+
+        // send HTTP PUT or PATCH request to update the item
+        try
+        {
+            String json = HTTP_UTILITY.getGson().toJson(item);
+            //RequestBody body = RequestBody.create(json, HTTP_UTILITY.getJSON());
+
+            RequestBody jsonBody = RequestBody.create(json, MediaType.parse("application/json"));
+            RequestBody fileBody = RequestBody.create(imageFile, MediaType.parse("image/*"));
+
+            MultipartBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("item", null, jsonBody)
+                    .addFormDataPart("image", imageFile.getName(), fileBody)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url("http://localhost:8080/item/update/with-image")
+                    .put(requestBody)
                     .addHeader("Authorization", "Bearer " + SessionManager.getToken())
                     .build();
 

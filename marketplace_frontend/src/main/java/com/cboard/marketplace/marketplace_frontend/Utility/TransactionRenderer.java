@@ -102,13 +102,22 @@ public class TransactionRenderer {
             detailView.getChildren().add(label);
         }
 
+        HBox buttons = new HBox(10);
+        buttons.setAlignment(Pos.CENTER);
         Button backButton = new Button("Back");
+        backButton.setStyle(
+                "-fx-background-color: black; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white;"
+        );
+        buttons.getChildren().add(backButton);
+
         backButton.setOnAction(e -> {
             targetContainer.getChildren().setAll(parentList.getChildren());
             onBack.run();
         });
 
-        detailView.getChildren().add(backButton);
+        detailView.getChildren().add(buttons);
 
         targetContainer.getChildren().setAll(detailView);
     }
