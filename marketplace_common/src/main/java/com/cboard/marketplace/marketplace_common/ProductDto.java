@@ -12,6 +12,8 @@ public class ProductDto extends ItemDto
     private Integer quantity;
     private String brand;
 
+    private Integer locationId;
+
     public ProductDto() {
     }
 
@@ -60,5 +62,15 @@ public class ProductDto extends ItemDto
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    @Override
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    @Override
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 }

@@ -10,6 +10,8 @@ public class ServiceDto extends ItemDto
     @NotNull(message = "Duration is required...")
     private Integer durationMinutes;
 
+    private Integer locationId;
+
     public ServiceDto() {
     }
 
@@ -48,4 +50,13 @@ public class ServiceDto extends ItemDto
         this.durationMinutes = durationMinutes;
     }
 
+    @Override
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    @Override
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
 }

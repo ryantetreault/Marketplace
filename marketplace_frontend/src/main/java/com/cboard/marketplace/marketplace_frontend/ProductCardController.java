@@ -3,6 +3,8 @@ package com.cboard.marketplace.marketplace_frontend;
 import com.cboard.marketplace.marketplace_common.*;
 import com.cboard.marketplace.marketplace_common.dto.LocationDto;
 import com.cboard.marketplace.marketplace_frontend.Utility.HttpUtility;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,7 +140,8 @@ public class ProductCardController {
             productImage.setImage(null);
         }
 
-        // Show  map if locationId is present
+        System.out.println("item.getLocationId() = " + item.getLocationId());
+        // Show map if locationId is present
         if (item.getLocationId() != null) {
             mapView.setVisible(true);
             noLocationLabel.setVisible(false);
@@ -151,30 +154,60 @@ public class ProductCardController {
 
     private void loadMap(int locationId) {
         Request request = new Request.Builder()
-                .url("http://localhost:8080/" + locationId)
+                .url("http://localhost:8080/api/locations/" + locationId)
                 .get()
+                .addHeader("Authorization", "Bearer " + SessionManager.getToken())
                 .build();
 
         try (Response response = HttpUtility.HTTP_UTILITY.getClient().newCall(request).execute()) {
             if (response.isSuccessful()) {
-                String json = response.body().string();
+                LocationDto location = HttpUtility.HTTP_UTILITY.getGson().fromJson(response.body().string(), LocationDto.class);
 
-                Type locationType = new TypeToken<LocationDto>() {}.getType();
-                LocationDto location = HttpUtility.HTTP_UTILITY.getGson().fromJson(json, locationType);
+                Double pad = 0.002;
+                Double lat = location.getLatitude();
+                Double lng = location.getLongitude();
 
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
+                if (lat == null || lng == null) {
+                    mapView.setVisible(false);
+                    noLocationLabel.setVisible(true);
+                    return;
+                }
 
-                String mapUrl = "https://maps.google.com/maps?q=" + latitude + "," + longitude + "&z=15&output=embed";
-                mapView.getEngine().load(mapUrl);
-                mapView.setVisible(true);
+                String mapHtml = """
+                            <html>
+                              <head>
+                                <style>
+                                  html, body {
+                                    margin: 0;
+                                    padding: 0;
+                                    height: 100%%;
+                                    overflow: hidden;
+                                  }
+                                  iframe {
+                                    width: 100%%;
+                                    height: 100%%;
+                                    border: none;
+                                  }
+                                </style>
+                              </head>
+                              <body>
+                                <iframe 
+                                  src="https://www.openstreetmap.org/export/embed.html?bbox=%f,%f,%f,%f&layer=mapnik&marker=%f,%f&zoom=20">
+                                </iframe>
+                              </body>
+                            </html>
+                            """.formatted(lng - pad, lat - pad, lng + pad, lat + pad, lat, lng);
+
+
+                mapView.getEngine().loadContent(mapHtml, "text/html");
             } else {
                 mapView.setVisible(false);
-                System.out.println("Failed to load location.");
+                noLocationLabel.setVisible(true);
             }
         } catch (IOException e) {
             e.printStackTrace();
             mapView.setVisible(false);
+            noLocationLabel.setVisible(true);
         }
     }
 
