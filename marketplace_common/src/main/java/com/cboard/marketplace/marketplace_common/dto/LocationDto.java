@@ -1,10 +1,20 @@
 package com.cboard.marketplace.marketplace_common.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LocationDto {
     private int locationId;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("address")
     private String address;
+
+    @SerializedName("latitude")
     private Double latitude;
+
+    @SerializedName("longitude")
     private Double longitude;
 
     public LocationDto() {}

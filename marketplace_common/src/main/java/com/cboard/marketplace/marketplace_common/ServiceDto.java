@@ -47,5 +47,4 @@ public class ServiceDto extends ItemDto
     {
         this.durationMinutes = durationMinutes;
     }
-
 }
