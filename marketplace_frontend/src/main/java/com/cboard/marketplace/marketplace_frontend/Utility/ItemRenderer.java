@@ -8,8 +8,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.reflect.TypeToken;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,6 +21,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,14 +38,38 @@ public class ItemRenderer {
     public static VBox createItemCard(ItemDto item, Consumer<ItemDto> onClick) {
         VBox card = new VBox(5);
         card.setPadding(new Insets(10));
-        card.setStyle("-fx-background-color: #f0f0f0; -fx-border-radius: 8px; -fx-background-radius: 8px;");
-        card.setPrefWidth(900);
+        card.setStyle("-fx-background-color: #d0f0ff; -fx-border-radius: 8px; -fx-background-radius: 8px;");
+        card.setPrefWidth(1060);
 
+
+        HBox contentBox = new HBox(10);
+        contentBox.setAlignment(Pos.CENTER_LEFT);
+
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(80);
+        imageView.setPreserveRatio(true);
+
+        if (item.getImage_date() != null && item.getImage_date().length > 0) {
+            Image image = new Image(new ByteArrayInputStream(item.getImage_date()));
+            imageView.setImage(image);
+        }
+        else
+        {
+            imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+        }
+
+        VBox textBox = new VBox(5);
         Label itemName = new Label(item.getName());
-        Label price = new Label("Price: $" + item.getPrice());
+        itemName.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        Label price = new Label("Price: $" + String.format("%.2f", item.getPrice()));
         Label category = new Label("Category: " + item.getCategory());
+        textBox.getChildren().addAll(itemName, price, category);
 
-        card.getChildren().addAll(itemName, price, category);
+        contentBox.getChildren().addAll(imageView, textBox);
+
+        card.getChildren().add(contentBox);
 
         card.setOnMouseClicked((MouseEvent e) -> onClick.accept(item));
 
@@ -52,16 +80,29 @@ public class ItemRenderer {
         VBox detailView = new VBox(10);
         detailView.setPadding(new Insets(10));
         detailView.setStyle("-fx-background-color: #d0f0ff; -fx-border-color: darkblue; -fx-border-radius: 8px; -fx-background-radius: 8px;");
-        detailView.setPrefWidth(900);
+        detailView.setPrefWidth(1060);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
+        imageView.setPreserveRatio(true);
+
+        if (item.getImage_date() != null && item.getImage_date().length > 0) {
+            imageView.setImage(new Image(new ByteArrayInputStream(item.getImage_date())));
+        } else
+        {
+            imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+        }
 
         Label itemName = new Label("Item: " + item.getName());
-        Label price = new Label("Price: $" + item.getPrice());
+        itemName.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        Label price = new Label("Price: $" + String.format("%.2f", item.getPrice()));
         Label category = new Label("Category: " + item.getCategory());
         Label description = new Label("Description: " + item.getDescription());
         Label releaseDate = new Label("Release Date: " + item.getReleaseDate());
         Label location = new Label("Location: " + item.getLocation());
 
-        detailView.getChildren().addAll(itemName, price, category, description, releaseDate, location);
+        detailView.getChildren().addAll(imageView, itemName, price, category, description, releaseDate, location);
 
         Map<String, String> specificFields = item.getSpecificFields();
         for (Map.Entry<String, String> entry : specificFields.entrySet()) {
@@ -93,11 +134,11 @@ public class ItemRenderer {
         VBox editView = new VBox(10);
         editView.setPadding(new Insets(10));
         editView.setStyle("-fx-background-color: #fff0f0; -fx-border-color: darkred; -fx-border-radius: 8px; -fx-background-radius: 8px;");
-        editView.setPrefWidth(900);
+        editView.setPrefWidth(1060);
 
         TextField nameField = new TextField(item.getName());
         nameField.setStyle("-fx-background-color: white; -fx-text-fill: black;");
-        TextField priceField = new TextField(String.valueOf(item.getPrice()));
+        TextField priceField = new TextField(String.format("%.2f", item.getPrice()));
 
         ComboBox<String> categoryField = new ComboBox<>();
         categoryField.setValue(item.getCategory());
@@ -112,13 +153,24 @@ public class ItemRenderer {
         for(LocationDto loc : getLocations())
             locationField.getItems().add(loc.getName());
 
+        Label nameLabel = new Label("Name:");
+        nameLabel.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
+        Label priceLabel = new Label("Price:");
+        priceLabel.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
+        Label descriptionLabel = new Label("Description:");
+        descriptionLabel.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
+        Label releaseDatLabel = new Label("Release Date:");
+        releaseDatLabel.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
+        Label categoryLabel = new Label("Category");
+        categoryLabel.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
+        Label locationLabel = new Label("Location:");
+        locationLabel.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
+
         editView.getChildren().addAll(
-                new Label("Name:"), nameField,
-                new Label("Price:"), priceField,
-                new Label("Category:"), categoryField,
-                new Label("Description:"), descriptionField,
-                new Label("Release Date:"), releaseDateField,
-                new Label("Location:"), locationField
+                nameLabel, nameField,
+                priceLabel, priceField,
+                descriptionLabel, descriptionField,
+                releaseDatLabel, releaseDateField
         );
 
 
@@ -127,10 +179,18 @@ public class ItemRenderer {
 
         for (Map.Entry<String, String> entry : specificFields.entrySet()) {
             Label label = new Label(entry.getKey() + ":");
+            label.setStyle("-fx-font-weight: bold; -fx-underline: true; -fx-font-size: 13px;");
             TextField input = new TextField(entry.getValue());
             dynamicFieldInputs.put(entry.getKey(), input);
             editView.getChildren().addAll(label, input);
         }
+
+
+        //put dropdowns together at the bottom
+        editView.getChildren().addAll(
+                categoryLabel, categoryField,
+                locationLabel, locationField
+        );
 
 
         Button backButton = new Button("Cancel");
@@ -140,6 +200,11 @@ public class ItemRenderer {
         });
 
         Button deleteButton = new Button("Delete");
+        deleteButton.setStyle(
+                "-fx-background-color: #8B0000; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white;"
+        );
         deleteButton.setOnAction(e -> {
 
             if(ItemRenderer.deleteItem(item.getItemId()))
@@ -153,6 +218,11 @@ public class ItemRenderer {
         });
 
         Button saveButton = new Button("Save Changes");
+        saveButton.setStyle(
+                "-fx-background-color: #90EE90; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: black;"
+        );
         saveButton.setOnAction(e -> {
 
             item.setName(nameField.getText());
@@ -177,7 +247,8 @@ public class ItemRenderer {
         });
 
         HBox buttons = new HBox(10);
-        buttons.getChildren().addAll(saveButton, backButton, deleteButton);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(saveButton, deleteButton, backButton);
 
         editView.getChildren().add(buttons);
         targetContainer.getChildren().setAll(editView);

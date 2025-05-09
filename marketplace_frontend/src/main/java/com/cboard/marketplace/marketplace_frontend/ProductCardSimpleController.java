@@ -36,7 +36,7 @@ public class ProductCardSimpleController {
         this.item = itemDto;
         titleTextField.setText(itemDto.getName());
         productTextArea.appendText(itemDto.getDescription() + "\n");
-        productTextArea.appendText("Cost: $" + itemDto.getPrice());
+        productTextArea.appendText("Cost: $" + String.format("%.2f", itemDto.getPrice()));
     }
     public double getCardWidth()
     {
