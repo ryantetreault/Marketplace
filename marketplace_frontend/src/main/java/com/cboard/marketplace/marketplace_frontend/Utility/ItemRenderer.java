@@ -57,7 +57,14 @@ public class ItemRenderer {
         }
         else
         {
-            imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+            try
+            {
+                imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+            }
+            catch(Exception e)
+            {
+                imageView.setImage(null);
+            }
         }
 
         VBox textBox = new VBox(5);
@@ -91,7 +98,14 @@ public class ItemRenderer {
             imageView.setImage(new Image(new ByteArrayInputStream(item.getImage_date())));
         } else
         {
-            imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+            try
+            {
+                imageView.setImage(new Image("file:/Users/cboard/Desktop/image.jpeg"));
+            }
+            catch(Exception e)
+            {
+                imageView.setImage(null);
+            }
         }
 
         Label itemName = new Label("Item: " + item.getName());
